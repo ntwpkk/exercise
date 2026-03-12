@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="โปรแกรมออกกำลังกาย Upper/Lower Split 4 วัน/สัปดาห์">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <title>โปรแกรมออกกำลังกาย</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="assets/css/templatemo-chain-app-dev.css">
+  <link rel="stylesheet" href="assets/css/animated.css">
+
+  <style>
+    body {
+      font-family: 'Sarabun', 'Roboto', sans-serif;
+    }
+
+    /* ── Day Panels ── */
+    .day-panel {
+      display: none;
+    }
+    .day-panel.active {
+      display: block;
+    }
+
+    /* ── Focus Badges ── */
+    .badge-push {
+      background: #4b8ef1;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .badge-pull {
+      background: #5bc0de;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .badge-lower {
+      background: #28a745;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .badge-lower-hip {
+      background: #e67e22;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    /* ── Duration Chip ── */
+    .duration-chip {
+      background: #f0f4ff;
+      color: #4b8ef1;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 14px;
+      display: inline-block;
+      font-weight: 500;
+    }
+
+    /* ── Cardio Card ── */
+    .cardio-card {
+      background: linear-gradient(105deg, rgba(91,104,235,0.08) 0%, rgba(40,225,253,0.08) 100%);
+      border: 1px solid rgba(75,142,241,0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 20px;
+    }
+    .cardio-card .cardio-icon {
+      font-size: 22px;
+      margin-right: 8px;
+    }
+    .cardio-card strong {
+      color: #4b8ef1;
+    }
+
+    /* ── Exercise Table ── */
+    .exercise-table thead th {
+      background: #4b8ef1;
+      color: white;
+      border-color: #3a7de0;
+      font-weight: 600;
+    }
+    .exercise-table tbody tr:hover {
+      background: #f0f4ff;
+    }
+    .exercise-table td {
+      vertical-align: middle;
+    }
+
+    /* ── Day Panel Header ── */
+    .day-panel-header {
+      border-bottom: 2px solid #f0f4ff;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    .day-panel-header h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2a2a2a;
+      margin-bottom: 8px;
+    }
+
+    /* ── Hero overrides ── */
+    .main-banner {
+      background: linear-gradient(105deg, rgba(91,104,235,1) 0%, rgba(40,225,253,1) 100%);
+      padding: 140px 0 80px;
+      text-align: center;
+    }
+    .main-banner h1 {
+      color: #fff;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .main-banner .subtitle {
+      color: rgba(255,255,255,0.9);
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .main-banner p {
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ── Workout Section ── */
+    #workout-section {
+      padding: 60px 0 80px;
+      background: #f8f9ff;
+      min-height: 60vh;
+    }
+
+    /* ── Logo text ── */
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff !important;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .background-header .logo-text {
+      color: #1e1e1e !important;
+    }
+
+    /* ── Rest Timer ── */
+    .rest-timer {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 9999;
+    }
+    .timer-bubble {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(105deg, rgba(91,104,235,1) 0%, rgba(40,225,253,1) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 24px;
+      color: white;
+      box-shadow: 0 4px 15px rgba(75,142,241,0.4);
+      transition: transform 0.2s;
+    }
+    .timer-bubble:hover {
+      transform: scale(1.1);
+    }
+    .timer-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      margin-bottom: 10px;
+      min-width: 220px;
+      text-align: center;
+      display: none;
+    }
+    .timer-card h6 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .timer-display {
+      font-size: 48px;
+      font-weight: 700;
+      color: #4b8ef1;
+      font-family: monospace;
+      margin: 10px 0;
+      line-height: 1;
+    }
+    .timer-done {
+      color: #28a745 !important;
+      animation: pulse 0.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .timer-presets {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .timer-presets button {
+      border: 2px solid #4b8ef1;
+      background: transparent;
+      color: #4b8ef1;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .timer-presets button:hover,
+    .timer-presets button.active-preset {
+      background: #4b8ef1;
+      color: white;
+    }
+    .timer-controls {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+    .timer-controls button {
+      border: none;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-start  { background: #4b8ef1; color: white; }
+    .btn-pause  { background: #ffc107; color: #333; }
+    .btn-reset  { background: #e9ecef; color: #555; }
+    .timer-controls button:hover { opacity: 0.85; }
+
+    /* ── Nav active state for day selectors ── */
+    .nav li.submenu > a.nav-day-active {
+      color: #4b8ef1 !important;
+    }
+
+    @media (max-width: 767px) {
+
+      /* ── Static nav — hide hamburger, always show nav ── */
+      .header-area .menu-trigger {
+        display: none !important;
+      }
+      .header-area .main-nav .nav,
+      .header-area .main-nav .nav[style] {
+        display: flex !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        float: none !important;
+        width: 100% !important;
+        margin-top: 0 !important;
+        padding: 0;
+      }
+      .header-area .main-nav .nav li {
+        width: auto !important;
+        background: transparent !important;
+        border-bottom: none !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+      }
+      .header-area .main-nav .nav li a {
+        height: auto !important;
+        line-height: normal !important;
+        background: transparent !important;
+        color: #fff !important;
+        padding: 6px 4px !important;
+        font-size: 14px;
+      }
+      .background-header .main-nav .nav li a {
+        color: #1e1e1e !important;
+      }
+      .header-area {
+        height: auto !important;
+        padding-bottom: 10px;
+      }
+      .header-area .logo {
+        margin-left: 0 !important;
+      }
+      .background-header .main-nav .nav {
+        margin-top: 10px !important;
+      }
+
+      /* Hero */
+      .main-banner {
+        padding: 100px 0 50px !important;
+      }
+      .main-banner h1 {
+        font-size: 28px !important;
+      }
+      .main-banner .subtitle {
+        font-size: 16px !important;
+      }
+      .main-banner p {
+        font-size: 14px !important;
+      }
+
+      /* Workout section */
+      #workout-section {
+        padding: 30px 0 50px !important;
+      }
+
+      /* Day panel header */
+      .day-panel-header h3 {
+        font-size: 18px !important;
+      }
+      .badge-push, .badge-pull, .badge-lower, .badge-lower-hip {
+        font-size: 11px;
+        padding: 3px 8px;
+      }
+      .duration-chip {
+        font-size: 12px;
+        padding: 3px 8px;
+      }
+
+      /* Exercise table — smaller font, hide weight column */
+      .exercise-table {
+        font-size: 13px;
+      }
+      .exercise-table th:last-child,
+      .exercise-table td:last-child {
+        display: none;
+      }
+
+      /* Cardio card */
+      .cardio-card {
+        font-size: 13px;
+        padding: 12px 14px;
+      }
+
+      /* Rest timer — smaller bubble, card doesn't overflow */
+      .rest-timer {
+        bottom: 16px;
+        right: 16px;
+      }
+      .timer-bubble {
+        width: 46px;
+        height: 46px;
+        font-size: 20px;
+      }
+      .timer-card {
+        min-width: 180px;
+        padding: 14px;
+      }
+      .timer-display {
+        font-size: 38px;
+      }
+    }
+
+    /* ── Collapsible detail sections ── */
+    .detail-section {
+      margin-bottom: 16px;
+      border: 1px solid #e0e8ff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .detail-toggle {
+      width: 100%;
+      background: #f0f4ff;
+      border: none;
+      padding: 12px 16px;
+      text-align: left;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: #2a2a2a;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .detail-toggle:hover { background: #e4eaff; }
+    .toggle-arrow { margin-left: auto; font-size: 12px; transition: transform 0.2s; }
+    .detail-toggle.open .toggle-arrow { transform: rotate(180deg); }
+    .detail-body { padding: 16px; background: white; }
+    .detail-list { padding-left: 24px; margin: 0; list-style-type: decimal; }
+    .detail-list li { margin-bottom: 6px; line-height: 1.6; display: list-item; }
+
+    /* ── Exercise detail cards ── */
+    .ex-detail-card {
+      border: 1px solid #e8f0ff;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .ex-detail-card:last-child { margin-bottom: 0; }
+    .ex-detail-header {
+      background: linear-gradient(90deg, #f0f4ff, #fff);
+      padding: 10px 14px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .ex-num {
+      background: #4b8ef1;
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .ex-name { font-weight: 700; color: #2a2a2a; font-size: 14px; }
+    .muscle-tag { font-size: 12px; color: #666; margin-left: auto; }
+    .ex-detail-card .detail-list { padding: 12px 14px 0 38px; list-style-type: decimal; }
+    .tip-box {
+      margin: 10px 14px 12px;
+      background: #f8fff8;
+      border-left: 3px solid #28a745;
+      padding: 8px 12px;
+      font-size: 13px;
+      border-radius: 0 6px 6px 0;
+      line-height: 1.5;
+    }
+    .tip-box.warn { background: #fffbf0; border-left-color: #ffc107; }
+
+    @media (max-width: 767px) {
+      .detail-toggle { font-size: 14px; padding: 10px 12px; }
+      .ex-name { font-size: 13px; }
+      .muscle-tag { font-size: 11px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Preloader -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- Logo -->
+            <a href="index.html" class="logo logo-text">ออกกำลังกาย</a>
+
+            <!-- Menu -->
+            <ul class="nav">
+              <!-- Home dropdown -->
+              <li class="submenu">
+                <a href="#">&#127968; บ้าน <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                <ul>
+                  <li><a href="#" onclick="showDay('home','monday');return false;">จันทร์ &ndash; Upper Push</a></li>
+                  <li><a href="#" onclick="showDay('home','tuesday');return false;">อังคาร &ndash; Lower Quad</a></li>
+                  <li><a href="#" onclick="showDay('home','thursday');return false;">พฤหัสบดี &ndash; Upper Pull</a></li>
+                  <li><a href="#" onclick="showDay('home','friday');return false;">ศุกร์ &ndash; Lower Hip</a></li>
+                </ul>
+              </li>
+              <!-- Gym dropdown -->
+              <li class="submenu">
+                <a href="#">&#127947; ยิม <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                <ul>
+                  <li><a href="#" onclick="showDay('gym','monday');return false;">จันทร์ &ndash; Upper A</a></li>
+                  <li><a href="#" onclick="showDay('gym','tuesday');return false;">อังคาร &ndash; Lower A</a></li>
+                  <li><a href="#" onclick="showDay('gym','thursday');return false;">พฤหัสบดี &ndash; Upper B</a></li>
+                  <li><a href="#" onclick="showDay('gym','friday');return false;">ศุกร์ &ndash; Lower B</a></li>
+                </ul>
+              </li>
+            </ul>
+
+            <a class="menu-trigger">
+              <span>Menu</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <div class="main-banner" id="top">
+    <div class="container">
+      <h1>โปรแกรมออกกำลังกาย</h1>
+      <p class="subtitle">Upper/Lower Split &middot; 4 วัน/สัปดาห์</p>
+      <p>โปรแกรมสำหรับผู้เริ่มต้น ใช้ดัมเบลที่บ้านหรือยิม เน้นความสมดุลของกล้ามเนื้อและการพัฒนาอย่างต่อเนื่อง</p>
+    </div>
+  </div>
+
+  <!-- Workout Day Panels Section -->
+  <section class="section" id="workout-section">
+    <div class="container">
+
+      <!-- ══════════════════════════════════════════════
+           HOME · MONDAY  (จันทร์ — ท่าบน เน้นดัน)
+      ══════════════════════════════════════════════ -->
+      <div id="panel-home-monday" class="day-panel">
+        <div class="day-panel-header">
+          <h3>&#127968; จันทร์ &mdash; ท่าบน</h3>
+          <span class="badge-push">เน้นดัน (Push)</span>
+          &nbsp;
+          <span class="duration-chip">&#9200; 80–90 นาที</span>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🔥 อบอุ่นร่างกาย <span class="duration-chip">5 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>หมุนข้อต่อ</strong> — หมุนคอ ไหล่ ข้อศอก ข้อมือ สะโพก เข่า ข้อเท้า วนทั้งซ้ายและขวา (30 วินาที)</li>
+              <li><strong>ยืดแมว-วัว</strong> — คุกเข่าสี่ขา สลับแอ่นหลังลง-โก้งหลังขึ้น 8-10 ครั้ง (30 วินาที)</li>
+              <li><strong>วนแขน/ดึงยางยืด</strong> — วนแขนใหญ่ๆ หรือดึงยางยืดออกด้านข้าง 15 ครั้ง (30 วินาที)</li>
+              <li><strong>สควอทเบาๆ (หนุนส้นเท้า)</strong> — ย่อตัวช้าๆ 10 ครั้ง (1 นาที)</li>
+              <li><strong>ฝึกท่าแรกด้วยน้ำหนักเบา</strong> — ใช้ 50% ของน้ำหนักจริง ทำ 10-12 ครั้ง (2 นาที)</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered exercise-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>ท่า</th>
+                <th style="width:130px">Sets &times; Reps</th>
+                <th style="width:70px">พัก</th>
+                <th style="width:160px">น้ำหนักเริ่มต้น</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>กดดัมเบลนอนพื้น</td><td>3&times;10-12</td><td>90s</td><td>10 kg/ข้าง</td></tr>
+              <tr><td>2</td><td>พายดัมเบลก้มตัว (สองมือ)</td><td>3&times;10-12</td><td>90s</td><td>10-12 kg/ข้าง</td></tr>
+              <tr><td>3</td><td>ยกดัมเบลเหนือหัวแบบหมุน (นั่งพื้น)</td><td>3&times;10-12</td><td>90s</td><td>5-7 kg/ข้าง</td></tr>
+              <tr><td>4</td><td>บินดัมเบลกลับด้าน (ยืนก้มตัว)</td><td>3&times;12-15</td><td>60s</td><td>3-5 kg/ข้าง</td></tr>
+              <tr><td>5</td><td>เคิร์ลดัมเบลฝ่ามือหันเข้า</td><td>3&times;10-12</td><td>60s</td><td>5-7 kg/ข้าง</td></tr>
+              <tr><td>6</td><td>ถีบแขนหลังดัมเบล</td><td>3&times;12-15</td><td>60s</td><td>3-5 kg/ข้าง</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            📋 รายละเอียดแต่ละท่า
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">1</span>
+                <span class="ex-name">กดดัมเบลนอนพื้น (DB Floor Press)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: อก, ต้นแขนหลัง</span>
+              </div>
+              <ol class="detail-list">
+                <li>นอนหงายบนพื้น งอเข่าขึ้น ฝ่าเท้าวางราบ</li>
+                <li>ถือดัมเบลทั้งสองมือ ยกขึ้นเหนืออก แขนตั้งตรง ฝ่ามือหันไปทางเท้า</li>
+                <li>ค่อยๆ งอศอกลง ปล่อยดัมเบลลงช้าๆ จนข้อศอกแตะพื้นเบาๆ (2 วินาที)</li>
+                <li>หยุดค้าง 1 วินาทีเมื่อศอกแตะพื้น</li>
+                <li>ดันดัมเบลขึ้นกลับไปจุดเริ่มต้น เกร็งหน้าอก (2 วินาที)</li>
+                <li>หายใจเข้าตอนลง หายใจออกตอนดันขึ้น</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: พื้นช่วยจำกัดไม่ให้ศอกงอลึกเกินไป ลดแรงกดที่ข้อศอก</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">2</span>
+                <span class="ex-name">พายดัมเบลก้มตัว (DB Bent-Over Row)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: หลัง, กลางหลัง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนเท้ากว้างเท่าไหล่ ถือดัมเบลทั้งสองมือ</li>
+                <li>งอเข่าเล็กน้อย ก้มตัวไปข้างหน้าประมาณ 45 องศา หลังตรง</li>
+                <li>ปล่อยแขนห้อยลงตรงๆ ดัมเบลอยู่ใต้อก</li>
+                <li>ดึงดัมเบลขึ้นมาข้างลำตัว โดยบีบสะบักเข้าหากัน (2 วินาที)</li>
+                <li>ค้างด้านบน 1 วินาที เกร็งหลัง</li>
+                <li>ค่อยๆ ปล่อยลง (2 วินาที) กลับจุดเริ่มต้น</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ดึงด้วยหลัง ไม่ใช่แขน นึกว่า "ดึงศอกกลับ" แทน "ยกมือขึ้น"</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">3</span>
+                <span class="ex-name">ยกดัมเบลเหนือหัวแบบหมุน (DB Arnold Press)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ไหล่ทั้ง 3 ส่วน</span>
+              </div>
+              <ol class="detail-list">
+                <li>นั่งพื้น หลังตรง (พิงผนังได้)</li>
+                <li>ถือดัมเบลยกขึ้นระดับหน้า ฝ่ามือหันเข้าหาตัว ศอกงออยู่หน้าอก</li>
+                <li>ค่อยๆ กางศอกออกด้านข้างพร้อมหมุนฝ่ามือออก แล้วดันขึ้นเหนือหัว (2 วินาที)</li>
+                <li>ตอนดันสุด ฝ่ามือหันออกจากตัว แขนเกือบตรง (อย่าล็อกศอก)</li>
+                <li>ค้าง 1 วินาที</li>
+                <li>ค่อยๆ ปล่อยลงโดยหมุนกลับ ฝ่ามือกลับมาหันเข้าหาตัว (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: การหมุนช่วยกระจายแรงให้ไหล่ค่อยเป็นค่อยไป ไม่กระชากข้อศอก</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">4</span>
+                <span class="ex-name">บินดัมเบลกลับด้าน (DB Reverse Fly)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ไหล่ด้านหลัง, กลางหลังส่วนบน</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนเท้ากว้างเท่าไหล่ งอเข่าเล็กน้อย ก้มตัว 45 องศา หลังตรง</li>
+                <li>ถือดัมเบลห้อยลงตรงๆ ใต้อก ฝ่ามือหันเข้าหากัน ศอกงอเล็กน้อย</li>
+                <li>กางแขนออกด้านข้างเหมือนนกกางปีก จนแขนขนานพื้น (2 วินาที)</li>
+                <li>ค้างด้านบน 1 วินาที บีบสะบักเข้าหากัน</li>
+                <li>ค่อยๆ ปล่อยลงช้าๆ (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ใช้น้ำหนักเบา ศอกงอเล็กน้อยค้างไว้ตลอด ไม่แกว่งตัว</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">5</span>
+                <span class="ex-name">เคิร์ลดัมเบลฝ่ามือหันเข้า (DB Hammer Curl)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นแขนหน้า, แขนท่อนล่าง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนตรง เท้ากว้างเท่าไหล่ ถือดัมเบล แขนห้อยข้างลำตัว</li>
+                <li>ฝ่ามือหันเข้าหากัน (เหมือนถือค้อน) — ค้างตำแหน่งนี้ตลอด</li>
+                <li>งอศอกยกดัมเบลขึ้นมาใกล้ไหล่ ข้อศอกแนบลำตัว ไม่แกว่ง (2 วินาที)</li>
+                <li>ค้างด้านบน 1 วินาที เกร็งหน้าแขน</li>
+                <li>ค่อยๆ ปล่อยลง (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: แขนท่อนบนแนบลำตัวตลอด ให้ศอกเป็นจุดหมุน ห้ามแกว่งตัวช่วย</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">6</span>
+                <span class="ex-name">ถีบแขนหลังดัมเบล (DB Tricep Kickback)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นแขนหลัง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนก้มตัวไปข้างหน้า งอเข่าเล็กน้อย (หรือวางมือข้างหนึ่งบนเก้าอี้)</li>
+                <li>ถือดัมเบล งอศอก 90 องศา แขนท่อนบนขนานพื้น ข้อศอกแนบลำตัว</li>
+                <li>เหยียดแขนตรงไปด้านหลังช้าๆ จนแขนตรง (2 วินาที)</li>
+                <li>ค้างตอนแขนตรง 1 วินาที เกร็งหลังแขน</li>
+                <li>ค่อยๆ งอศอกกลับมา 90 องศา (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: แขนท่อนบนอยู่นิ่งตลอด ขยับแค่แขนท่อนล่าง (ศอกเป็นจุดหมุน)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardio-card">
+          <span class="cardio-icon">&#128293;</span>
+          <strong>คาร์ดิโอ:</strong> 20 นาที Elliptical Zone 2 &middot; 115–134 bpm
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🧘 คลายกล้ามเนื้อ <span class="duration-chip">5–7 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>ยืดหน้าอก</strong> — ยืนข้างกำแพง วางมือบนกำแพง ศอกสูงเท่าไหล่ หมุนตัวออกจนรู้สึกตึงหน้าอก (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดหลัง (กอดเข่า)</strong> — นั่งพื้น ดึงเข่าทั้งสองข้างเข้าหาอก ม้วนหลังเล็กน้อย รู้สึกยืดหลังส่วนบน</li>
+              <li><strong>ยืดไหล่</strong> — ดึงแขนข้างหนึ่งพาดผ่านหน้าอก ใช้มืออีกข้างกดแขนเข้าหาตัว (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดต้นแขนหลัง</strong> — ยกแขนขึ้นเหนือหัว งอศอกให้มือไปอยู่หลังหัว ใช้มืออีกข้างดันศอกเบาๆ (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดต้นแขนหน้า</strong> — ยืนหน้ากำแพง วางฝ่ามือบนกำแพง นิ้วชี้ลง ค่อยๆ ถอยตัวออกจนรู้สึกตึงหน้าแขน (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดคอ</strong> — เอียงหัวไปด้านข้าง หูเข้าหาไหล่ ใช้มือกดเบาๆ (ทำทั้งซ้ายขวา + ก้มหน้าลง)</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           HOME · TUESDAY  (อังคาร — ท่าล่าง เน้นต้นขาหน้า)
+      ══════════════════════════════════════════════ -->
+      <div id="panel-home-tuesday" class="day-panel">
+        <div class="day-panel-header">
+          <h3>&#127968; อังคาร &mdash; ท่าล่าง</h3>
+          <span class="badge-lower">เน้นต้นขาหน้า (Quad)</span>
+          &nbsp;
+          <span class="duration-chip">&#9200; 80–90 นาที</span>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🔥 อบอุ่นร่างกาย <span class="duration-chip">5 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>หมุนข้อต่อ</strong> — หมุนคอ ไหล่ ข้อศอก ข้อมือ สะโพก เข่า ข้อเท้า วนทั้งซ้ายและขวา (30 วินาที)</li>
+              <li><strong>ยืดแมว-วัว</strong> — คุกเข่าสี่ขา สลับแอ่นหลังลง-โก้งหลังขึ้น 8-10 ครั้ง (30 วินาที)</li>
+              <li><strong>วนแขน/ดึงยางยืด</strong> — วนแขนใหญ่ๆ หรือดึงยางยืดออกด้านข้าง 15 ครั้ง (30 วินาที)</li>
+              <li><strong>สควอทเบาๆ (หนุนส้นเท้า)</strong> — ย่อตัวช้าๆ 10 ครั้ง (1 นาที)</li>
+              <li><strong>ฝึกท่าแรกด้วยน้ำหนักเบา</strong> — ใช้ 50% ของน้ำหนักจริง ทำ 10-12 ครั้ง (2 นาที)</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered exercise-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>ท่า</th>
+                <th style="width:130px">Sets &times; Reps</th>
+                <th style="width:70px">พัก</th>
+                <th style="width:160px">น้ำหนักเริ่มต้น</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>สควอทแบบอุ้มดัมเบล (หนุนส้นเท้า)</td><td>3&times;10-12</td><td>90s</td><td>22 kg (ดัมเบลเดียว)</td></tr>
+              <tr><td>2</td><td>ยกดัมเบลจากพื้นแบบขาตึง (RDL)</td><td>3&times;10-12</td><td>90s</td><td>15 kg/ข้าง</td></tr>
+              <tr><td>3</td><td>ยกสะโพกนอนพื้น (ดัมเบลบนสะโพก)</td><td>3&times;12-15</td><td>60s</td><td>10-15 kg</td></tr>
+              <tr><td>4</td><td>สควอทขากว้าง (ดัมเบลเดียว)</td><td>3&times;12-15</td><td>60s</td><td>15-20 kg</td></tr>
+              <tr><td>5</td><td>ยกส้นเท้ายืน (ดัมเบลสองมือ)</td><td>3&times;15-20</td><td>60s</td><td>10-12 kg/ข้าง</td></tr>
+              <tr><td>6</td><td>แมลงตาย (Dead Bug)</td><td>3&times;10/ข้าง</td><td>60s</td><td>ไม่ใช้น้ำหนัก</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            📋 รายละเอียดแต่ละท่า
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">1</span>
+                <span class="ex-name">สควอทแบบอุ้มดัมเบล (DB Goblet Squat)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหน้า, ก้น</span>
+              </div>
+              <ol class="detail-list">
+                <li>หนุนส้นเท้าสูง ~2-3cm (แผ่นน้ำหนัก หนังสือเล่มหนา หรือของแข็ง)</li>
+                <li>ยืนเท้ากว้างกว่าไหล่เล็กน้อย ปลายเท้าชี้ออกเล็กน้อย ส้นเท้าวางบนที่หนุน</li>
+                <li>ถือดัมเบลตั้งขึ้น อุ้มไว้ที่หน้าอก มือจับหัวดัมเบลด้านบน</li>
+                <li>ค่อยๆ ย่อตัวลง ดันก้นไปข้างหลัง เข่าชี้ไปทิศเดียวกับปลายเท้า (2 วินาที)</li>
+                <li>ย่อลงจนต้นขาขนานพื้น (หรือลงได้เท่าที่สบาย) ค้าง 1 วินาที</li>
+                <li>ดันตัวขึ้นกลับท่ายืน เกร็งต้นขาและก้น (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: หนุนส้นเท้าช่วยให้ย่อตัวได้ลึกขึ้นโดยไม่ต้องงอข้อเท้ามาก เหมาะกับข้อเท้าซ้าย</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">2</span>
+                <span class="ex-name">ยกดัมเบลจากพื้นแบบขาตึง (DB Romanian Deadlift)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหลัง, ก้น</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนเท้ากว้างเท่าสะโพก ถือดัมเบลสองมือหน้าต้นขา ฝ่ามือหันเข้าหาตัว</li>
+                <li>งอเข่าเล็กน้อย (แล้วล็อกไว้ ไม่งอเพิ่ม)</li>
+                <li>ค่อยๆ ก้มตัวไปข้างหน้า ดันก้นไปข้างหลัง ดัมเบลเลื่อนลงตามขา หลังตรงตลอด (2 วินาที)</li>
+                <li>ก้มลงจนรู้สึกตึงต้นขาหลัง (ประมาณดัมเบลถึงระดับหน้าแข้ง) ค้าง 1 วินาที</li>
+                <li>เกร็งก้นดันสะโพกไปข้างหน้า ยืดตัวขึ้นกลับท่ายืน (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: นี่คือท่าก้มตัว ไม่ใช่ท่าย่อตัว เข่าแค่งอนิดเดียวแล้วค้างไว้ ให้ส่วนก้มมาจากสะโพก</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">3</span>
+                <span class="ex-name">ยกสะโพกนอนพื้น (Glute Bridge)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ก้น</span>
+              </div>
+              <ol class="detail-list">
+                <li>นอนหงายบนพื้น งอเข่าขึ้น ฝ่าเท้าวางราบ เท้ากว้างเท่าสะโพก</li>
+                <li>วางดัมเบลบนกระดูกสะโพก (ตรงข้อพับต้นขากับท้อง) ใช้มือประคองดัมเบล</li>
+                <li>เกร็งก้น ดันสะโพกขึ้นจนลำตัวตั้งแต่ไหล่ถึงเข่าเป็นเส้นตรง (2 วินาที)</li>
+                <li>ค้างด้านบน 1 วินาที บีบก้นให้แน่น</li>
+                <li>ค่อยๆ ปล่อยสะโพกลง (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: อย่าดันสูงจนหลังแอ่น ให้เป็นเส้นตรงจากไหล่ถึงเข่าพอ</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">4</span>
+                <span class="ex-name">สควอทขากว้าง (DB Sumo Squat)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหน้า, ต้นขาด้านใน, ก้น</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนขากว้างกว่าไหล่มาก ปลายเท้าชี้ออกด้านข้างประมาณ 45 องศา</li>
+                <li>ถือดัมเบลตั้งขึ้น สองมือจับหัวดัมเบลด้านบน ห้อยลงตรงกลางตัว</li>
+                <li>ค่อยๆ ย่อตัวลง เข่าชี้ไปทิศเดียวกับปลายเท้า หลังตรง (2 วินาที)</li>
+                <li>ย่อลงจนต้นขาขนานพื้น ค้าง 1 วินาที</li>
+                <li>ดันตัวขึ้น เกร็งต้นขาและก้น (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ขากว้างทำให้ข้อเท้าไม่ต้องงอมาก เหมาะกับข้อเท้าที่มีปัญหา</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">5</span>
+                <span class="ex-name">ยกส้นเท้ายืน (Standing Calf Raise)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: น่อง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนตรง ถือดัมเบลทั้งสองมือห้อยข้างลำตัว เท้ากว้างเท่าสะโพก</li>
+                <li>ค่อยๆ เขย่งปลายเท้าขึ้น ยกส้นเท้าให้สูงที่สุดเท่าที่ทำได้ (2 วินาที)</li>
+                <li>ค้างด้านบน 1 วินาที เกร็งน่อง</li>
+                <li>ค่อยๆ ลดส้นเท้าลง (2 วินาที)</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ถ้าเจ็บข้อเท้าซ้าย: ลดช่วงเขย่ง (ไม่ต้องสูงสุด) หรือข้ามท่านี้ไปก่อน</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">6</span>
+                <span class="ex-name">แมลงตาย (Dead Bug)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: หน้าท้อง, แกนกลางลำตัว</span>
+              </div>
+              <ol class="detail-list">
+                <li>นอนหงาย ยกแขนทั้งสองตั้งตรงขึ้นเหนือหน้าอก</li>
+                <li>ยกขาขึ้น งอเข่า 90 องศา (ต้นขาตั้งตรง หน้าแข้งขนานพื้น)</li>
+                <li>กดหลังส่วนล่างแนบพื้นตลอด (สำคัญมาก)</li>
+                <li>ค่อยๆ ยืดแขนขวาไปด้านหลัง (เหนือหัว) พร้อมกับยืดขาซ้ายออกตรง ลงไปใกล้พื้น (แต่ไม่แตะ)</li>
+                <li>ค้าง 1 วินาที ดึงกลับมาจุดเริ่มต้น</li>
+                <li>สลับข้าง — แขนซ้าย + ขาขวา</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: หลังส่วนล่างต้องแนบพื้นตลอด ถ้าหลังลอย = ท่าผิด ลดช่วงการเคลื่อนไหวลง</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardio-card">
+          <span class="cardio-icon">&#128293;</span>
+          <strong>คาร์ดิโอ:</strong> 20 นาที Elliptical Zone 2 &middot; 115–134 bpm
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🧘 คลายกล้ามเนื้อ <span class="duration-chip">5–7 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>ยืดต้นขาหน้า</strong> — ยืนขาเดียว (จับกำแพงช่วยทรงตัว) งอเข่าจับข้อเท้าดึงส้นเท้าเข้าหาก้น รู้สึกตึงต้นขาหน้า (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดต้นขาหลัง</strong> — นั่งพื้น เหยียดขาตรง ก้มตัวเอื้อมมือไปจับปลายเท้า (หรือหน้าแข้ง) ค่อยๆ ก้ม ไม่กระตุก</li>
+              <li><strong>ยืดสะโพก (ท่านกพิราบ)</strong> — นั่งพื้น พับขาข้างหนึ่งไว้หน้าตัว เหยียดอีกข้างไปด้านหลัง ค่อยๆ ก้มตัวลง (ถ้าทำไม่ได้ ให้นั่งเก้าอี้ ยกข้อเท้าวางบนเข่าอีกข้าง แล้วกดเข่าลงเบาๆ)</li>
+              <li><strong>ยืดน่อง</strong> — ยืนหน้ากำแพง ก้าวเท้าข้างหนึ่งไปด้านหลัง ส้นเท้าแนบพื้น ดันสะโพกไปข้างหน้า (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดหลังส่วนล่าง (ท่าเด็ก)</strong> — คุกเข่า นั่งบนส้นเท้า ก้มตัวเหยียดแขนไปข้างหน้า หน้าผากแตะพื้น ค้าง 20-30 วินาที</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           HOME · THURSDAY  (พฤหัสบดี — ท่าบน เน้นดึง)
+      ══════════════════════════════════════════════ -->
+      <div id="panel-home-thursday" class="day-panel">
+        <div class="day-panel-header">
+          <h3>&#127968; พฤหัสบดี &mdash; ท่าบน</h3>
+          <span class="badge-pull">เน้นดึง (Pull)</span>
+          &nbsp;
+          <span class="duration-chip">&#9200; 80–90 นาที</span>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🔥 อบอุ่นร่างกาย <span class="duration-chip">5 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>หมุนข้อต่อ</strong> — หมุนคอ ไหล่ ข้อศอก ข้อมือ สะโพก เข่า ข้อเท้า วนทั้งซ้ายและขวา (30 วินาที)</li>
+              <li><strong>ยืดแมว-วัว</strong> — คุกเข่าสี่ขา สลับแอ่นหลังลง-โก้งหลังขึ้น 8-10 ครั้ง (30 วินาที)</li>
+              <li><strong>วนแขน/ดึงยางยืด</strong> — วนแขนใหญ่ๆ หรือดึงยางยืดออกด้านข้าง 15 ครั้ง (30 วินาที)</li>
+              <li><strong>สควอทเบาๆ (หนุนส้นเท้า)</strong> — ย่อตัวช้าๆ 10 ครั้ง (1 นาที)</li>
+              <li><strong>ฝึกท่าแรกด้วยน้ำหนักเบา</strong> — ใช้ 50% ของน้ำหนักจริง ทำ 10-12 ครั้ง (2 นาที)</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered exercise-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>ท่า</th>
+                <th style="width:130px">Sets &times; Reps</th>
+                <th style="width:70px">พัก</th>
+                <th style="width:160px">น้ำหนักเริ่มต้น</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>พายดัมเบลมือเดียว (มือวางพื้น)</td><td>3&times;10-12/ข้าง</td><td>90s</td><td>10-12 kg</td></tr>
+              <tr><td>2</td><td>กดดัมเบลนอนพื้น ฝ่ามือหันเข้า</td><td>3&times;10-12</td><td>90s</td><td>10 kg/ข้าง</td></tr>
+              <tr><td>3</td><td>ยกดัมเบลออกด้านข้าง</td><td>3&times;12-15</td><td>60s</td><td>3-5 kg/ข้าง</td></tr>
+              <tr><td>4</td><td>บินดัมเบลนอนพื้น</td><td>3&times;12-15</td><td>60s</td><td>5-7 kg/ข้าง</td></tr>
+              <tr><td>5</td><td>เคิร์ลดัมเบลฝ่ามือหงาย</td><td>3&times;10-12</td><td>60s</td><td>5-7 kg/ข้าง</td></tr>
+              <tr><td>6</td><td>ม้วนข้อมือดัมเบล + ม้วนข้อมือกลับด้าน</td><td>2&times;15-20</td><td>60s</td><td>3-5 kg/ข้าง</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            📋 รายละเอียดแต่ละท่า
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">1</span>
+                <span class="ex-name">พายดัมเบลมือเดียว (DB Single-Arm Row)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: หลัง, กลางหลัง</span>
+              </div>
+              <ol class="detail-list">
+                <li>คุกเข่าข้างหนึ่ง วางมือข้างเดียวกันบนพื้น (หรือเก้าอี้เตี้ย) หลังตรง</li>
+                <li>ขาอีกข้างเหยียดออกด้านข้างเล็กน้อยเพื่อทรงตัว</li>
+                <li>มือที่ว่างถือดัมเบล ห้อยลงตรงๆ</li>
+                <li>ดึงดัมเบลขึ้นมาข้างลำตัว ศอกชี้ขึ้นเพดาน บีบสะบักเข้า (2 วินาที)</li>
+                <li>ค้างด้านบน 1 วินาที ค่อยๆ ปล่อยลง (2 วินาที)</li>
+                <li>ทำครบจำนวนแล้วสลับข้าง</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ลำตัวอยู่นิ่ง ไม่บิดตาม ดึงด้วยหลัง ไม่ใช่แขน</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">2</span>
+                <span class="ex-name">กดดัมเบลนอนพื้น ฝ่ามือหันเข้า (DB Floor Press — Neutral Grip)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: อก, ต้นแขนหลัง</span>
+              </div>
+              <ol class="detail-list">
+                <li>นอนหงายบนพื้น งอเข่าขึ้น ฝ่าเท้าวางราบ</li>
+                <li>ถือดัมเบลทั้งสองมือ ฝ่ามือหันเข้าหากัน (ไม่ใช่หันไปทางเท้า)</li>
+                <li>ยกดัมเบลขึ้นเหนืออก แขนตั้งตรง</li>
+                <li>ค่อยๆ งอศอกลง ปล่อยดัมเบลลงช้าๆ จนศอกแตะพื้นเบาๆ (2 วินาที) ค้าง 1 วินาที</li>
+                <li>ดันขึ้นกลับจุดเริ่มต้น (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ฝ่ามือหันเข้าลดแรงบิดที่ข้อศอก เน้นหลังแขนมากขึ้น</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">3</span>
+                <span class="ex-name">ยกดัมเบลออกด้านข้าง (DB Lateral Raise)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ไหล่กลาง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนตรง เท้ากว้างเท่าไหล่ ถือดัมเบลห้อยข้างลำตัว ฝ่ามือหันเข้าหากัน</li>
+                <li>งอศอกเล็กน้อย (~10-15 องศา) แล้วค้างมุมนี้ตลอด</li>
+                <li>ค่อยๆ ยกแขนออกด้านข้าง จนแขนขนานพื้น (สูงระดับไหล่) (2 วินาที)</li>
+                <li>ค้าง 1 วินาที ค่อยๆ ปล่อยลง (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ใช้น้ำหนักเบา นึกภาพเทน้ำจากเหยือก (เอียงดัมเบลให้นิ้วก้อยสูงกว่านิ้วโป้งเล็กน้อย) ไม่แกว่งตัวช่วย</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">4</span>
+                <span class="ex-name">บินดัมเบลนอนพื้น (DB Floor Fly)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: อก (เน้นยืด)</span>
+              </div>
+              <ol class="detail-list">
+                <li>นอนหงายบนพื้น งอเข่าขึ้น ฝ่าเท้าวางราบ</li>
+                <li>ถือดัมเบลยกขึ้นเหนืออก แขนตั้งตรง ฝ่ามือหันเข้าหากัน</li>
+                <li>งอศอกเล็กน้อย (ค้างมุมนี้ตลอด)</li>
+                <li>ค่อยๆ กางแขนออกด้านข้าง เหมือนกอดลูกบอลใหญ่ จนหลังแขนแตะพื้น (2 วินาที)</li>
+                <li>ค้าง 1 วินาที รู้สึกยืดหน้าอก</li>
+                <li>หุบแขนกลับมาเหนืออก เกร็งหน้าอก (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: พื้นช่วยจำกัดไม่ให้กางแขนลึกเกินไป ป้องกันไหล่บาดเจ็บ</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">5</span>
+                <span class="ex-name">เคิร์ลดัมเบลฝ่ามือหงาย (DB Supinated Curl)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นแขนหน้า (ลูกหนู)</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนตรง เท้ากว้างเท่าไหล่ ถือดัมเบล แขนห้อยข้างลำตัว</li>
+                <li>ฝ่ามือหันออกจากตัว (หงายขึ้น)</li>
+                <li>งอศอกยกดัมเบลขึ้นมาใกล้ไหล่ ข้อศอกแนบลำตัว (2 วินาที)</li>
+                <li>ค้างด้านบน 1 วินาที เกร็งลูกหนู</li>
+                <li>ค่อยๆ ปล่อยลง (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ต่างจากวันจันทร์ — วันนี้ฝ่ามือหงาย เน้นลูกหนู (Biceps) โดยตรง</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">6</span>
+                <span class="ex-name">ม้วนข้อมือดัมเบล + ม้วนข้อมือกลับด้าน (DB Wrist Curl)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: แขนท่อนล่าง (แรงบีบมือ)</span>
+              </div>
+              <ol class="detail-list">
+                <li>นั่งพื้น วางแขนท่อนล่างบนต้นขา ให้ข้อมือห้อยพ้นเข่า</li>
+                <li><strong>ม้วนข้อมือ (ฝ่ามือหงาย):</strong> ถือดัมเบล ฝ่ามือหงายขึ้น ค่อยๆ ม้วนข้อมือขึ้น (กำมือ) แล้วปล่อยลง — ทำ 15-20 ครั้ง</li>
+                <li><strong>ม้วนข้อมือกลับด้าน (หลังมือหงาย):</strong> กลับมือให้หลังมือหงายขึ้น ค่อยๆ กระดกข้อมือขึ้น แล้วปล่อยลง — ทำ 15-20 ครั้ง</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: เสริมแรงบีบมือสำหรับท่าพายและยกจากพื้น + ป้องกันอาการปวดข้อศอก</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardio-card">
+          <span class="cardio-icon">&#128293;</span>
+          <strong>คาร์ดิโอ:</strong> 20 นาที Elliptical Zone 2 &middot; 115–134 bpm
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🧘 คลายกล้ามเนื้อ <span class="duration-chip">5–7 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>ยืดหน้าอก</strong> — ยืนข้างกำแพง วางมือบนกำแพง ศอกสูงเท่าไหล่ หมุนตัวออกจนรู้สึกตึงหน้าอก (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดหลัง (กอดเข่า)</strong> — นั่งพื้น ดึงเข่าทั้งสองข้างเข้าหาอก ม้วนหลังเล็กน้อย รู้สึกยืดหลังส่วนบน</li>
+              <li><strong>ยืดไหล่</strong> — ดึงแขนข้างหนึ่งพาดผ่านหน้าอก ใช้มืออีกข้างกดแขนเข้าหาตัว (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดต้นแขนหลัง</strong> — ยกแขนขึ้นเหนือหัว งอศอกให้มือไปอยู่หลังหัว ใช้มืออีกข้างดันศอกเบาๆ (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดต้นแขนหน้า</strong> — ยืนหน้ากำแพง วางฝ่ามือบนกำแพง นิ้วชี้ลง ค่อยๆ ถอยตัวออกจนรู้สึกตึงหน้าแขน (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดข้อมือ</strong> — ยื่นแขนตรงไปข้างหน้า ใช้มืออีกข้างดึงนิ้วลง (ยืดหลังแขนท่อนล่าง) แล้วดึงนิ้วขึ้น (ยืดท้องแขนท่อนล่าง) ทำทั้งสองข้าง</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           HOME · FRIDAY  (ศุกร์ — ท่าล่าง เน้นสะโพก)
+      ══════════════════════════════════════════════ -->
+      <div id="panel-home-friday" class="day-panel">
+        <div class="day-panel-header">
+          <h3>&#127968; ศุกร์ &mdash; ท่าล่าง</h3>
+          <span class="badge-lower-hip">เน้นสะโพก (Hip)</span>
+          &nbsp;
+          <span class="duration-chip">&#9200; 85–90 นาที</span>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🔥 อบอุ่นร่างกาย <span class="duration-chip">5 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>หมุนข้อต่อ</strong> — หมุนคอ ไหล่ ข้อศอก ข้อมือ สะโพก เข่า ข้อเท้า วนทั้งซ้ายและขวา (30 วินาที)</li>
+              <li><strong>ยืดแมว-วัว</strong> — คุกเข่าสี่ขา สลับแอ่นหลังลง-โก้งหลังขึ้น 8-10 ครั้ง (30 วินาที)</li>
+              <li><strong>วนแขน/ดึงยางยืด</strong> — วนแขนใหญ่ๆ หรือดึงยางยืดออกด้านข้าง 15 ครั้ง (30 วินาที)</li>
+              <li><strong>สควอทเบาๆ (หนุนส้นเท้า)</strong> — ย่อตัวช้าๆ 10 ครั้ง (1 นาที)</li>
+              <li><strong>ฝึกท่าแรกด้วยน้ำหนักเบา</strong> — ใช้ 50% ของน้ำหนักจริง ทำ 10-12 ครั้ง (2 นาที)</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered exercise-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>ท่า</th>
+                <th style="width:130px">Sets &times; Reps</th>
+                <th style="width:70px">พัก</th>
+                <th style="width:160px">น้ำหนักเริ่มต้น</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>ยกดัมเบลจากพื้นขากว้าง (Sumo DL)</td><td>3&times;10-12</td><td>90s</td><td>15 kg/ข้าง</td></tr>
+              <tr><td>2</td><td>สควอทแบบอุ้มดัมเบล (หนุนส้นเท้า)</td><td>3&times;12-15</td><td>90s</td><td>20 kg (ดัมเบลเดียว)</td></tr>
+              <tr><td>3</td><td>ดันสะโพกพิงผนัง (ดัมเบลบนสะโพก)</td><td>3&times;12-15</td><td>60s</td><td>10-15 kg</td></tr>
+              <tr><td>4</td><td>ยกดัมเบลจากพื้นขาตรง (Stiff-Leg DL)</td><td>3&times;10-12</td><td>60s</td><td>12-15 kg/ข้าง</td></tr>
+              <tr><td>5</td><td>ยกส้นเท้านั่ง (ดัมเบลบนเข่า)</td><td>3&times;20-25</td><td>60s</td><td>10-15 kg/เข่า</td></tr>
+              <tr><td>6</td><td>แพลงก์</td><td>3&times;30-45 วิ</td><td>60s</td><td>ไม่ใช้น้ำหนัก</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            📋 รายละเอียดแต่ละท่า
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">1</span>
+                <span class="ex-name">ยกดัมเบลจากพื้นขากว้าง (DB Sumo Deadlift)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ก้น, ต้นขาหลัง, ต้นขาด้านใน</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนขากว้างกว่าไหล่มาก ปลายเท้าชี้ออก 45 องศา</li>
+                <li>ถือดัมเบลทั้งสองมือ ห้อยลงตรงกลางตัว ฝ่ามือหันเข้าหากัน</li>
+                <li>ค่อยๆ ย่อตัวลง ดันก้นไปหลัง หลังตรง ดัมเบลเลื่อนลงระหว่างขา (2 วินาที)</li>
+                <li>ย่อลงจนดัมเบลใกล้พื้น (หรือลงได้เท่าที่หลังยังตรง) ค้าง 1 วินาที</li>
+                <li>เกร็งก้น ดันตัวขึ้น ยืดสะโพกไปข้างหน้า (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ขากว้างทำให้ข้อเท้าไม่ต้องงอมาก + ฝึกได้ทั้งก้น ต้นขาหลัง และต้นขาด้านในพร้อมกัน</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">2</span>
+                <span class="ex-name">สควอทแบบอุ้มดัมเบล (DB Goblet Squat)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหน้า, ก้น</span>
+              </div>
+              <ol class="detail-list">
+                <li>หนุนส้นเท้าสูง ~2-3cm (เหมือนวันอังคาร)</li>
+                <li>ยืนเท้ากว้างกว่าไหล่เล็กน้อย ปลายเท้าชี้ออก ส้นเท้าอยู่บนที่หนุน</li>
+                <li>ถือดัมเบลตั้งขึ้น อุ้มไว้หน้าอก</li>
+                <li>ค่อยๆ ย่อตัวลง เข่าชี้ไปทิศเดียวกับปลายเท้า (2 วินาที)</li>
+                <li>ย่อลงจนต้นขาขนานพื้น ค้าง 1 วินาที ดันตัวขึ้น เกร็งต้นขาและก้น (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: วันนี้ทำมากกว่า (12-15 ครั้ง) แต่น้ำหนักเบากว่าวันอังคาร เพื่อฝึกความทนทาน</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">3</span>
+                <span class="ex-name">ดันสะโพกพิงผนัง (DB Hip Thrust)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ก้น</span>
+              </div>
+              <ol class="detail-list">
+                <li>นั่งพื้น เอาหลังส่วนบน (ช่วงสะบัก) พิงขอบโซฟา/เก้าอี้แข็ง/ผนัง</li>
+                <li>งอเข่า ฝ่าเท้าวางราบบนพื้น เท้ากว้างเท่าสะโพก</li>
+                <li>วางดัมเบลบนกระดูกสะโพก ใช้มือประคอง</li>
+                <li>เกร็งก้น ดันสะโพกขึ้นจนลำตัวตั้งแต่ไหล่ถึงเข่าเป็นเส้นตรง (2 วินาที)</li>
+                <li>ค้างด้านบน 1 วินาที บีบก้นให้แน่น ค่อยๆ ปล่อยสะโพกลง (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ถ้าไม่มีของพิง ให้ทำท่ายกสะโพกนอนพื้น (เหมือนวันอังคาร) แทนได้เลย</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">4</span>
+                <span class="ex-name">ยกดัมเบลจากพื้นขาตรง (DB Stiff-Leg Deadlift)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหลัง (เน้นยืด), ก้น</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนเท้ากว้างเท่าสะโพก ถือดัมเบลสองมือหน้าต้นขา</li>
+                <li>ขาเหยียดตรง (หรืองอเข่าน้อยมากๆ — น้อยกว่าวัน RDL)</li>
+                <li>ค่อยๆ ก้มตัวไปข้างหน้า ดัมเบลเลื่อนลงตามขา หลังตรงตลอด (2 วินาที)</li>
+                <li>ก้มลงจนรู้สึกตึงต้นขาหลังมาก ค้าง 1 วินาที</li>
+                <li>เกร็งก้น ดันสะโพกไปข้างหน้า ยืดตัวขึ้น (2 วินาที)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ต่างจากวันอังคาร — วันนี้ขาตรงกว่า เน้นยืดต้นขาหลังมากกว่า</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">5</span>
+                <span class="ex-name">ยกส้นเท้านั่ง (Seated Calf Raise)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: น่องส่วนลึก (Soleus)</span>
+              </div>
+              <ol class="detail-list">
+                <li>นั่งบนเก้าอี้หรือนั่งพื้น เข่างอ 90 องศา ฝ่าเท้าวางราบ</li>
+                <li>วางดัมเบลบนเข่าแต่ละข้าง ใช้มือประคอง</li>
+                <li>ค่อยๆ เขย่งปลายเท้าขึ้น ยกส้นเท้าให้สูง (2 วินาที)</li>
+                <li>ค้างด้านบน 1 วินาที เกร็งน่อง ค่อยๆ ลดลง (2 วินาที)</li>
+                <li>ทำ 20-25 ครั้ง (น่องส่วนลึกต้องการจำนวนครั้งสูง)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ต่างจากวันอังคาร — วันนี้นั่ง เน้นน่องส่วนลึก (Soleus) ทำจำนวนมากกว่า</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">6</span>
+                <span class="ex-name">แพลงก์ (Plank)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: แกนกลางลำตัว, หน้าท้อง</span>
+              </div>
+              <ol class="detail-list">
+                <li>นอนคว่ำ ยกตัวขึ้นด้วยข้อศอกและปลายเท้า</li>
+                <li>ข้อศอกอยู่ตรงใต้ไหล่ แขนท่อนล่างวางราบบนพื้น</li>
+                <li>ลำตัวตรงเป็นเส้นเดียว ตั้งแต่หัวถึงส้นเท้า</li>
+                <li>เกร็งหน้าท้องและบีบก้น ค้างไว้ 30-45 วินาที</li>
+                <li>หายใจสม่ำเสมอ อย่ากลั้นหายใจ</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ห้ามก้นยกสูง ห้ามหลังแอ่น ถ้าทำ 30 วินาทีไม่ไหว → เริ่มที่ 15-20 วินาทีก่อน</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardio-card">
+          <span class="cardio-icon">&#128293;</span>
+          <strong>คาร์ดิโอ:</strong> 25 นาที Elliptical Zone 2 &middot; 115–134 bpm
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🧘 คลายกล้ามเนื้อ <span class="duration-chip">5–7 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>ยืดต้นขาหน้า</strong> — ยืนขาเดียว (จับกำแพงช่วยทรงตัว) งอเข่าจับข้อเท้าดึงส้นเท้าเข้าหาก้น รู้สึกตึงต้นขาหน้า (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดต้นขาหลัง</strong> — นั่งพื้น เหยียดขาตรง ก้มตัวเอื้อมมือไปจับปลายเท้า (หรือหน้าแข้ง) ค่อยๆ ก้ม ไม่กระตุก</li>
+              <li><strong>ยืดสะโพก (ท่านกพิราบ)</strong> — นั่งพื้น พับขาข้างหนึ่งไว้หน้าตัว เหยียดอีกข้างไปด้านหลัง ค่อยๆ ก้มตัวลง (ถ้าทำไม่ได้ ให้นั่งเก้าอี้ ยกข้อเท้าวางบนเข่าอีกข้าง แล้วกดเข่าลงเบาๆ)</li>
+              <li><strong>ยืดน่อง</strong> — ยืนหน้ากำแพง ก้าวเท้าข้างหนึ่งไปด้านหลัง ส้นเท้าแนบพื้น ดันสะโพกไปข้างหน้า (ทำทั้งสองข้าง)</li>
+              <li><strong>ยืดหลังส่วนล่าง (ท่าเด็ก)</strong> — คุกเข่า นั่งบนส้นเท้า ก้มตัวเหยียดแขนไปข้างหน้า หน้าผากแตะพื้น ค้าง 20-30 วินาที</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           GYM · MONDAY  (จันทร์ — Upper A เน้นดัน)
+      ══════════════════════════════════════════════ -->
+      <div id="panel-gym-monday" class="day-panel">
+        <div class="day-panel-header">
+          <h3>&#127947; จันทร์ &mdash; Upper A</h3>
+          <span class="badge-push">เน้นท่าดัน (Push)</span>
+          &nbsp;
+          <span class="duration-chip">&#9200; 75–90 นาที</span>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🔥 วอร์มอัพ <span class="duration-chip">8–10 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>หมุนแขนวงกลม (Arm Circles)</strong> — หมุนไปข้างหน้า 10 รอบ + หมุนไปข้างหลัง 10 รอบ</li>
+              <li><strong>ดึงยางยืดออกจากกัน (Band Pull-Apart)</strong> — 15 ครั้ง จับยางยืดระดับหน้าอก ดึงออกจากกัน เน้นบีบสะบักเข้าหากัน (ถ้าไม่มียางยืด ใช้สาย Cable น้ำหนักเบาแทน)</li>
+              <li><strong>หมุนไหล่ออก (Cable External Rotation)</strong> — 10 ครั้ง/ข้าง ข้อศอกชิดลำตัว หมุนมือออกด้านข้างด้วยสาย Cable น้ำหนักเบา</li>
+              <li><strong>Cat-Cow (แอ่น-โก่งหลัง)</strong> — 10 ครั้ง คุกเข่า สลับโก่งหลัง-แอ่นหลังตามจังหวะหายใจ</li>
+              <li><strong>ดันสะบักที่กำแพง (Scapular Wall Push-Up)</strong> — 10 ครั้ง ยืนหันหน้าเข้ากำแพง มือเท้ากำแพง ดันสะบักออก-หุบเข้า (ใช้กำแพงแทนพื้นเพื่อหลีกเลี่ยงอาการเจ็บข้อศอก)</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered exercise-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>ท่า</th>
+                <th style="width:130px">Sets &times; Reps</th>
+                <th style="width:70px">พัก</th>
+                <th style="width:160px">น้ำหนักเริ่มต้น</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Dumbbell Floor Press</td><td>3&times;10-12</td><td>90s</td><td>5 kg/ข้าง</td></tr>
+              <tr><td>2</td><td>Shoulder Press Machine</td><td>3&times;10-12</td><td>90s</td><td>10 kg</td></tr>
+              <tr><td>3</td><td>Dumbbell Lateral Raise</td><td>3&times;12-15</td><td>60s</td><td>3 kg/ข้าง</td></tr>
+              <tr><td>4</td><td>Cable Tricep Pushdown</td><td>3&times;12-15</td><td>60s</td><td>5-7.5 kg</td></tr>
+              <tr><td>5</td><td>Cable Lat Pulldown</td><td>3&times;10-12</td><td>90s</td><td>15 kg</td></tr>
+              <tr><td>6</td><td>Cable Face Pull</td><td>3&times;15-20</td><td>60s</td><td>5 kg</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            📋 รายละเอียดแต่ละท่า
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">1</span>
+                <span class="ex-name">Dumbbell Floor Press (ดันดัมเบลนอนบนพื้น)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: อก, ไหล่หน้า, Triceps</span>
+              </div>
+              <ol class="detail-list">
+                <li>นอนหงายบนพื้น เข่างอ เท้าราบกับพื้น</li>
+                <li>จับ dumbbell แต่ละมือ ยกขึ้นเหนือหน้าอก แขนเหยียดตรง</li>
+                <li>ค่อยๆ ลด dumbbell ลง จนข้อศอกแตะพื้นเบาๆ (ท่อนแขนบนทำมุม ~45° กับลำตัว)</li>
+                <li>หยุดสั้นๆ 1 วินาทีที่พื้น (ตัดแรงเหวี่ยง)</li>
+                <li>ดัน dumbbell กลับขึ้นจนแขนเหยียดตรง บีบหน้าอกที่จุดบนสุด</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อศอกซ้าย: เริ่มเบา สังเกตอาการ ถ้าเจ็บให้ลดน้ำหนักหรือหยุด อย่ากางข้อศอกกว้างเกินไป (ทำมุม ~45° กับลำตัว)</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">2</span>
+                <span class="ex-name">Shoulder Press Machine (เครื่องกดไหล่)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ไหล่ทุกส่วน, Triceps, บ่าส่วนบน</span>
+              </div>
+              <ol class="detail-list">
+                <li>ปรับเบาะให้หลังพิงตรง เท้าราบกับพื้น</li>
+                <li>จับมือจับในตำแหน่งที่สบาย</li>
+                <li>ดันขึ้นจนแขนเกือบเหยียดตรง (ไม่ล็อกข้อศอก)</li>
+                <li>ค่อยๆ ลดลงมาจนมือจับอยู่ระดับหู–คาง</li>
+                <li>เกร็งท้องตลอด อย่าแอ่นหลัง หายใจออกขาดัน</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อศอกซ้าย: ท่านี้เป็นการดันเหนือหัว ถ้ารู้สึกเจ็บข้อศอกให้ลดช่วงการเคลื่อนไหวหรือลดน้ำหนัก</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">3</span>
+                <span class="ex-name">Dumbbell Lateral Raise (ยกดัมเบลด้านข้าง)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ไหล่ด้านข้าง (Middle Deltoid)</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนตรง เท้ากว้างเท่าไหล่ จับ dumbbell ข้างลำตัว ฝ่ามือหันเข้า</li>
+                <li>เกร็งท้องเล็กน้อย ไม่โยกตัว</li>
+                <li>ยก dumbbell ออกด้านข้างพร้อมกัน ข้อศอกงอเล็กน้อย (~10–15°)</li>
+                <li>ยกจนแขนขนานพื้น (ระดับไหล่) หยุดสั้นๆ 1 วินาที บีบไหล่ด้านข้าง</li>
+                <li>ค่อยๆ ลดลงมาช้าๆ (2–3 วินาที) นึกภาพ "เทน้ำจากแก้ว" — นิ้วก้อยสูงกว่านิ้วโป้งเล็กน้อย</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: อย่ายกไหล่ขึ้น (จะกลายเป็นกล้ามเนื้อบ่าทำงานแทน) ถ้าน้ำหนักเบาเกินให้เพิ่มจำนวนครั้งก่อน</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">4</span>
+                <span class="ex-name">Cable Tricep Pushdown (กดสายเคเบิลฝึก Triceps)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: Triceps</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนหน้าเครื่อง Cable ปรับรอกขึ้นสูงสุด ใส่ straight bar หรือเชือก (rope)</li>
+                <li>จับ bar/rope ข้อศอกชิดลำตัว งอ ~90°</li>
+                <li>กดลงมาจนแขนเหยียดตรง บีบ Triceps ที่จุดล่างสุด 1 วินาที</li>
+                <li>ค่อยๆ ปล่อยกลับขึ้นช้าๆ (2 วินาที) จนข้อศอกงอ ~90°</li>
+                <li>ท่อนแขนบนอยู่นิ่งชิดลำตัวตลอด ลำตัวเอนไปข้างหน้าเล็กน้อย</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อศอกซ้าย: เริ่มน้ำหนักเบา ถ้าเจ็บให้เปลี่ยนเป็นเชือก (neutral grip) อาจสบายกว่า อย่าใช้แรงเหวี่ยงโยกตัว</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">5</span>
+                <span class="ex-name">Cable Lat Pulldown (ดึงสายเคเบิลฝึกหลัง)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: หลังกว้าง (Lat), Biceps, บ่าส่วนล่าง</span>
+              </div>
+              <ol class="detail-list">
+                <li>นั่งที่เครื่อง Cable Pulldown ขาล็อกใต้แผ่นกัน (ถ้ามี)</li>
+                <li>จับ bar กว้างกว่าไหล่เล็กน้อย ฝ่ามือคว่ำ</li>
+                <li>อกยืด ดึงไหล่ลงไม่ให้ยกขึ้นก่อนเริ่มดึง</li>
+                <li>ดึง bar ลงมาที่ระดับอกบน ศอกชี้ลงและไปข้างหลัง</li>
+                <li>บีบสะบักเข้าหากันที่จุดล่างสุด 1 วินาที ค่อยๆ ปล่อยกลับขึ้นช้าๆ</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: อย่าดึง bar ไปด้านหลังศีรษะ — ดึงเข้าหน้าอกเสมอ ไม่เอนตัวหลังมากเกิน</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">6</span>
+                <span class="ex-name">Cable Face Pull (ดึงสายเคเบิลเข้าหน้า)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ไหล่หลัง, Rotator Cuff, บ่าส่วนกลาง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ปรับรอก Cable ระดับหน้า (สูงกว่าศีรษะเล็กน้อย) ใช้เชือก (rope attachment)</li>
+                <li>ยืนตรง เท้ากว้างเท่าไหล่ ถอยหลังเล็กน้อยให้สายตึง</li>
+                <li>ดึงเชือกมาที่ระดับหน้าผาก–จมูก แยกมือออกจากกัน</li>
+                <li>หมุนมือออกด้านข้างที่จุดสุด ท่อนแขนบนตั้งฉากกับลำตัว</li>
+                <li>บีบสะบักเข้าหากัน ค้าง 1–2 วินาที ค่อยๆ ปล่อยกลับ</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: อย่าใช้น้ำหนักหนักเกิน เน้นรู้สึกกล้ามเนื้อทำงาน อย่ายกไหล่ขึ้น</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardio-card">
+          <span class="cardio-icon">&#128293;</span>
+          <strong>คาร์ดิโอ:</strong> 15–20 นาที Elliptical/ลู่วิ่ง Zone 2 &middot; 115–134 bpm
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🧘 ยืดเหยียด <span class="duration-chip">5–7 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>ยืดอก (Chest Doorway Stretch)</strong> — ยืนข้างกรอบประตู แขนเท้ากรอบ ศอกระดับไหล่ เอนตัวไปข้างหน้า → ยืดกล้ามเนื้ออกและไหล่ด้านหน้า</li>
+              <li><strong>ยืดหลังกว้าง (Lat Stretch)</strong> — จับเสา/กรอบประตูข้างเดียว เอนลำตัวออก → ยืดกล้ามเนื้อหลังกว้าง</li>
+              <li><strong>ยืดต้นแขนหลัง (Tricep Stretch)</strong> — ยกแขนขึ้น งอศอก มือแตะหลัง มืออีกข้างกดศอกเบาๆ (⚠️ ข้อศอกซ้าย: ทำเบาๆ ถ้าเจ็บให้ข้าม)</li>
+              <li><strong>ยืดคอด้านข้าง (Neck Side Stretch)</strong> — เอียงหัวไปด้านข้าง มือกดเบาๆ ค้าง → ยืดกล้ามเนื้อบ่า</li>
+              <li><strong>ยืดไหล่หลัง (Cross-body Shoulder Stretch)</strong> — แขนข้ามหน้าอก มืออีกข้างดึงเข้า → ยืดไหล่ด้านหลัง</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           GYM · TUESDAY  (อังคาร — Lower A เน้นต้นขาหน้า+ก้น)
+      ══════════════════════════════════════════════ -->
+      <div id="panel-gym-tuesday" class="day-panel">
+        <div class="day-panel-header">
+          <h3>&#127947; อังคาร &mdash; Lower A</h3>
+          <span class="badge-lower">เน้นต้นขาหน้า+ก้น</span>
+          &nbsp;
+          <span class="duration-chip">&#9200; 75–90 นาที</span>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🔥 วอร์มอัพ <span class="duration-chip">8–10 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>Bodyweight Squat ใช้แผ่นรองส้นเท้า</strong> — 10 ครั้ง วางแผ่นรอง/wedge ใต้ส้นเท้า ย่อลงช้าๆ</li>
+              <li><strong>แกว่งขาหน้า-หลัง (Leg Swing Front-Back)</strong> — 10 ครั้ง/ข้าง จับราวจับทรงตัว แกว่งขาไปหน้า-หลัง</li>
+              <li><strong>แกว่งขาเข้า-ออก (Leg Swing Side-to-Side)</strong> — 10 ครั้ง/ข้าง แกว่งขาเข้า-ออก</li>
+              <li><strong>Glute Bridge (ดันก้นขึ้น)</strong> — 15 ครั้ง นอนหงาย เข่างอ ดันก้นขึ้น บีบก้นค้าง 1 วินาที</li>
+              <li><strong>หมุนข้อเท้า (Ankle Circles)</strong> — 10 รอบ/ข้าง/ทิศทาง (⚠️ ข้อเท้าซ้าย: ทำเบาๆ ในช่วงที่สบาย)</li>
+              <li><strong>Cat-Cow (แอ่น-โก่งหลัง)</strong> — 8 ครั้ง</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered exercise-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>ท่า</th>
+                <th style="width:130px">Sets &times; Reps</th>
+                <th style="width:70px">พัก</th>
+                <th style="width:160px">น้ำหนักเริ่มต้น</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Dumbbell Goblet Squat (ใช้แผ่นรองส้นเท้า)</td><td>3&times;10-12</td><td>90s</td><td>10 kg</td></tr>
+              <tr><td>2</td><td>Leg Extension</td><td>3&times;12-15</td><td>60s</td><td>15 kg</td></tr>
+              <tr><td>3</td><td>Dumbbell Romanian Deadlift</td><td>3&times;10-12</td><td>90s</td><td>8 kg/ข้าง</td></tr>
+              <tr><td>4</td><td>Cable Pull-Through</td><td>3&times;12-15</td><td>60s</td><td>10 kg</td></tr>
+              <tr><td>5</td><td>Standing Dumbbell Calf Raise (สองขา)</td><td>3&times;15-20</td><td>60s</td><td>10 kg/ข้าง</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            📋 รายละเอียดแต่ละท่า
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">1</span>
+                <span class="ex-name">Dumbbell Goblet Squat ใช้แผ่นรองส้นเท้า</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหน้า, ก้น, ต้นขาด้านใน</span>
+              </div>
+              <ol class="detail-list">
+                <li>วาง wedge/แผ่นน้ำหนักรองใต้ส้นเท้าทั้งสองข้าง (สูง ~2–3 cm)</li>
+                <li>จับ dumbbell ด้านบนแนวตั้ง ทั้งสองมือจับที่หัว dumbbell ชิดหน้าอก</li>
+                <li>ยืนเท้ากว้างกว่าไหล่เล็กน้อย ปลายเท้าหันออก ~15–30°</li>
+                <li>หายใจเข้า เกร็งท้อง ย่อลงโดยดันสะโพกถอยหลัง + เข่าดันออกตามแนวปลายเท้า</li>
+                <li>ย่อลงลึกเท่าที่ทำได้โดยหลังไม่โค้ง หยุดสั้นๆ ที่จุดล่างสุด</li>
+                <li>ดันขึ้นผ่านส้นเท้า บีบก้นที่ด้านบน</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อเท้าซ้าย: ใช้แผ่นรองส้นเท้าเสมอ ถ้ารู้สึกยืดข้อเท้ามากเกินให้ลดความลึก อย่าให้เข่าหุบเข้าใน</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">2</span>
+                <span class="ex-name">Leg Extension (เครื่องเหยียดขา)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหน้า (Quadriceps)</span>
+              </div>
+              <ol class="detail-list">
+                <li>นั่งบนเครื่อง ปรับหลังพิงตรง สะโพกชิดพนักพิง</li>
+                <li>ปรับแผ่นกดให้อยู่ด้านหน้าข้อเท้า (เหนือเท้า)</li>
+                <li>เหยียดเข่าขึ้นจนขาตรง บีบต้นขาหน้าที่จุดบนสุด 1–2 วินาที</li>
+                <li>ค่อยๆ ลดลงมาช้าๆ (2–3 วินาที) จนเข่างอ ~90°</li>
+                <li>ทำซ้ำ ไม่ใช้แรงเหวี่ยง</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: เน้นบีบต้นขาหน้าและควบคุมช่วงปล่อยน้ำหนักลง ข้อเท้าซ้ายไม่ได้รับภาระโดยตรงในท่านี้ → ปลอดภัย</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">3</span>
+                <span class="ex-name">Dumbbell Romanian Deadlift — RDL</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหลัง, ก้น, หลังล่าง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนตรง เท้ากว้างเท่าสะโพก จับ dumbbell หน้าต้นขา ฝ่ามือคว่ำ</li>
+                <li>เข่างอเล็กน้อย (ไม่ล็อกเข่า)</li>
+                <li>หายใจเข้า เกร็งท้อง ดันสะโพกถอยหลัง (พับตัวที่สะโพก ไม่ใช่ที่เอว)</li>
+                <li>ลำตัวเอนไปข้างหน้า dumbbell เลื่อนลงตามหน้าขา หลังตรงตลอด</li>
+                <li>ลงจนรู้สึกยืดที่ต้นขาหลัง (ประมาณระดับหน้าแข้งกลาง)</li>
+                <li>บีบก้น + ต้นขาหลัง ดันสะโพกกลับมาท่ายืน</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อเท้าซ้าย: ท่านี้สองขา ไม่มีปัญหา แต่ให้กระจายน้ำหนักเท่ากันทั้งสองเท้า อย่าให้หลังโค้ง</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">4</span>
+                <span class="ex-name">Cable Pull-Through (ดึงสายเคเบิลผ่านขา)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ก้น, ต้นขาหลัง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ปรับรอก Cable ต่ำสุด ใส่เชือก (rope attachment)</li>
+                <li>ยืนหันหลังให้เครื่อง Cable เท้ากว้างกว่าไหล่ จับเชือกระหว่างขา</li>
+                <li>ถอยออกมา 2–3 ก้าว ให้สายตึง</li>
+                <li>พับตัวที่สะโพก: ดันสะโพกถอยหลัง เข่างอเล็กน้อย รู้สึกยืดที่ต้นขาหลังและก้น</li>
+                <li>บีบก้นแรง ดันสะโพกไปข้างหน้า กลับสู่ท่ายืนตรง ค้างบีบก้น 1–2 วินาที</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: อย่าแอ่นหลังที่จุดบนสุด เน้นรู้สึกก้นทำงาน ไม่ใช่หลังล่าง</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">5</span>
+                <span class="ex-name">Standing Dumbbell Calf Raise สองขา (เขย่งน่องยืน)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: น่อง (Gastrocnemius + Soleus)</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนตรง จับ dumbbell ทั้งสองมือข้างลำตัว เท้ากว้างเท่าสะโพก</li>
+                <li>เขย่งขึ้นบนปลายเท้าทั้งสองข้าง จนน่องหดตัวเต็มที่</li>
+                <li>ค้างที่จุดบนสุด 1–2 วินาที</li>
+                <li>ค่อยๆ ลดลงมาช้าๆ (2–3 วินาที) จนส้นเท้าแตะพื้น</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อเท้าซ้าย: ทำสองเท้าเสมอ กระจายน้ำหนักเท่ากัน ถ้าเจ็บให้ลดน้ำหนักหรือลดช่วงการเคลื่อนไหว ทำช้าและควบคุม ไม่กระดอน</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardio-card">
+          <span class="cardio-icon">&#128293;</span>
+          <strong>คาร์ดิโอ:</strong> 15–20 นาที Elliptical/ลู่วิ่ง Zone 2 &middot; 115–134 bpm
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🧘 ยืดเหยียด <span class="duration-chip">5–7 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>ยืดต้นขาหน้า (Standing Quad Stretch)</strong> — ยืนจับราว ดึงเท้าขึ้นชิดก้น → ยืดกล้ามเนื้อต้นขาหน้า (⚠️ จับราวทรงตัวเสมอ)</li>
+              <li><strong>ยืดต้นขาหลัง (Standing Hamstring Stretch)</strong> — วางส้นเท้าบนขั้นบันไดต่ำ ขาตรง เอนลำตัวไปข้างหน้า → ยืดกล้ามเนื้อต้นขาหลัง</li>
+              <li><strong>ยืดน่อง (Wall Calf Stretch)</strong> — มือเท้ากำแพง ขาหนึ่งถอยหลัง ส้นเท้าราบ → ยืดน่องมัดใหญ่ (⚠️ ข้อเท้าซ้าย: ทำเบาๆ)</li>
+              <li><strong>ยืดสะโพกหน้า (Kneeling Hip Flexor Stretch)</strong> — คุกเข่าข้างหนึ่ง ดันสะโพกไปข้างหน้า → ยืดกล้ามเนื้อสะโพกหน้า</li>
+              <li><strong>ยืดก้น (Seated Glute Stretch — Figure-4)</strong> — นั่ง ไขว้ข้อเท้าบนเข่าอีกข้าง เอนไปข้างหน้า → ยืดกล้ามเนื้อก้น</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           GYM · THURSDAY  (พฤหัสบดี — Upper B เน้นดึง)
+      ══════════════════════════════════════════════ -->
+      <div id="panel-gym-thursday" class="day-panel">
+        <div class="day-panel-header">
+          <h3>&#127947; พฤหัสบดี &mdash; Upper B</h3>
+          <span class="badge-pull">เน้นท่าดึง (Pull)</span>
+          &nbsp;
+          <span class="duration-chip">&#9200; 75–90 นาที</span>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🔥 วอร์มอัพ <span class="duration-chip">8–10 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>หมุนแขนวงกลม (Arm Circles)</strong> — หมุนไปข้างหน้า 10 รอบ + หมุนไปข้างหลัง 10 รอบ</li>
+              <li><strong>ดึงยางยืดออกจากกัน (Band Pull-Apart)</strong> — 15 ครั้ง จับยางยืดระดับหน้าอก ดึงออกจากกัน เน้นบีบสะบักเข้าหากัน</li>
+              <li><strong>หมุนไหล่ออก (Cable External Rotation)</strong> — 10 ครั้ง/ข้าง ข้อศอกชิดลำตัว หมุนมือออกด้านข้างด้วยสาย Cable น้ำหนักเบา</li>
+              <li><strong>Cat-Cow (แอ่น-โก่งหลัง)</strong> — 10 ครั้ง คุกเข่า สลับโก่งหลัง-แอ่นหลังตามจังหวะหายใจ</li>
+              <li><strong>ดันสะบักที่กำแพง (Scapular Wall Push-Up)</strong> — 10 ครั้ง ยืนหันหน้าเข้ากำแพง มือเท้ากำแพง ดันสะบักออก-หุบเข้า</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered exercise-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>ท่า</th>
+                <th style="width:130px">Sets &times; Reps</th>
+                <th style="width:70px">พัก</th>
+                <th style="width:160px">น้ำหนักเริ่มต้น</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Cable Lat Pulldown จับแคบ</td><td>3&times;10-12</td><td>90s</td><td>15 kg</td></tr>
+              <tr><td>2</td><td>Dumbbell Row</td><td>3&times;10-12</td><td>90s</td><td>8-10 kg/ข้าง</td></tr>
+              <tr><td>3</td><td>Cable Seated Row</td><td>3&times;10-12</td><td>90s</td><td>15 kg</td></tr>
+              <tr><td>4</td><td>Dumbbell Hammer Curl</td><td>3&times;10-12</td><td>60s</td><td>5 kg/ข้าง</td></tr>
+              <tr><td>5</td><td>Cable Chest Fly</td><td>3&times;12-15</td><td>60s</td><td>5 kg/ข้าง</td></tr>
+              <tr><td>6</td><td>Cable Face Pull</td><td>3&times;15-20</td><td>60s</td><td>5 kg</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            📋 รายละเอียดแต่ละท่า
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">1</span>
+                <span class="ex-name">Cable Lat Pulldown จับแคบ (Close-Grip)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: หลังกว้าง (Lat), Biceps, บ่าส่วนล่าง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ใช้ V-bar หรือ close-grip attachment (มือจับแบบมือชิดกัน)</li>
+                <li>นั่งตรง ขาล็อกใต้แผ่นกัน จับ handle อกยืด ดึงไหล่ลงไม่ให้ยกขึ้น</li>
+                <li>ดึง handle ลงมาที่อกบน ศอกชี้ลงชิดลำตัว</li>
+                <li>บีบสะบักเข้าหากันที่จุดล่างสุด 1 วินาที</li>
+                <li>ปล่อยกลับขึ้นช้าๆ ยืดแขนจนสุด เอนลำตัวน้อยกว่าแบบจับกว้าง</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: นึก "ดึงด้วยศอก" ไม่ใช่แขน → กล้ามเนื้อหลังจะทำงานดีขึ้น ดึงไหล่ลงตลอด</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">2</span>
+                <span class="ex-name">Dumbbell Row (ดึงดัมเบลฝึกหลัง)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: หลังกว้าง, Rhomboids, บ่ากลาง, ไหล่หลัง, Biceps</span>
+              </div>
+              <ol class="detail-list">
+                <li>มือข้างหนึ่งและเข่าข้างเดียวกันวางบนม้านั่ง หรือยืนเท้าทั้งสองข้าง พับตัวที่สะโพก</li>
+                <li>มืออีกข้างจับ dumbbell แขนห้อยลงตรง</li>
+                <li>อกขนานพื้น หลังตรง เกร็งท้อง</li>
+                <li>ดึง dumbbell ขึ้นมาข้างลำตัว ศอกชี้ขึ้นฟ้า ดึงไปที่สะโพก</li>
+                <li>บีบสะบักเข้าที่จุดบนสุด 1 วินาที ค่อยๆ ลดลงมา ยืดแขนจนสุด ทำครบแล้วสลับข้าง</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: อย่าบิดลำตัวขณะดึง — ลำตัวนิ่ง อย่าใช้แรงเหวี่ยงดีดน้ำหนักขึ้น</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">3</span>
+                <span class="ex-name">Cable Seated Row (นั่งดึงสายเคเบิล)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: หลังกว้าง, Rhomboids, บ่ากลาง, ไหล่หลัง</span>
+              </div>
+              <ol class="detail-list">
+                <li>นั่งที่เครื่อง Cable Row เท้าเหยียบแผ่นรอง เข่างอเล็กน้อย</li>
+                <li>จับ V-bar หรือ bar ตรง อกยืด ดึงไหล่ลง</li>
+                <li>ดึง handle เข้าหาท้องน้อย/สะดือ ศอกชิดลำตัว</li>
+                <li>บีบสะบักเข้าหากันที่จุดสุด 1–2 วินาที</li>
+                <li>ค่อยๆ ปล่อยกลับ ยืดแขนจนรู้สึกยืดที่หลัง (ลำตัวเอนไปข้างหน้าเล็กน้อยตอนปล่อย)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: อย่าโยกตัวมาก ใช้การบีบสะบักเป็นหลัก เน้นรู้สึก "บีบสะบัก" ทุกครั้ง</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">4</span>
+                <span class="ex-name">Dumbbell Hammer Curl (ยกดัมเบลงอแขน ฝ่ามือหันเข้า)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: Biceps, Brachialis, แขนท่อนล่าง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนตรง จับ dumbbell ข้างลำตัว ฝ่ามือหันเข้าหากัน ข้อศอกชิดลำตัว นิ่ง</li>
+                <li>งอแขนขึ้นพร้อมกันหรือสลับข้าง จนกล้ามเนื้อต้นแขนหดตัวเต็มที่</li>
+                <li>หยุดสั้นๆ ที่จุดบนสุด 1 วินาที</li>
+                <li>ค่อยๆ ลดลงมาช้าๆ (2 วินาที) ฝ่ามือหันเข้าหากันตลอด (ไม่หมุน)</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: อย่าเหวี่ยงตัว — ถ้าต้องเหวี่ยงแปลว่าหนักเกิน ท่อนแขนบนนิ่ง เคลื่อนเฉพาะท่อนแขนล่าง</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">5</span>
+                <span class="ex-name">Cable Chest Fly (บินอกด้วยสายเคเบิล)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: อก (Pectoralis Major), ไหล่หน้า</span>
+              </div>
+              <ol class="detail-list">
+                <li>ปรับ Cable ทั้งสองข้างระดับกลาง–สูง ยืนตรงกลาง ก้าวเท้าหนึ่งไปข้างหน้าเล็กน้อย</li>
+                <li>เอนลำตัวไปข้างหน้านิดหน่อย ข้อศอกงอเล็กน้อย (~10–15°)</li>
+                <li>แขนกางออกจนรู้สึกยืดที่หน้าอก</li>
+                <li>ดึงมือเข้าหากันด้านหน้าอก (เป็นวงโค้ง) จน handle เกือบชนกัน</li>
+                <li>บีบหน้าอก 1–2 วินาทีที่จุดกลาง ค่อยๆ ปล่อยกลับออก</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อศอกซ้าย: ท่านี้มีภาระข้อศอกน้อย แต่สังเกตอาการ — ถ้าเจ็บให้ลดช่วงการเคลื่อนไหวหรือน้ำหนัก อย่าล็อกข้อศอกตรง</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">6</span>
+                <span class="ex-name">Cable Face Pull (ดึงสายเคเบิลเข้าหน้า)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ไหล่หลัง, Rotator Cuff, บ่าส่วนกลาง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ปรับรอก Cable ระดับหน้า (สูงกว่าศีรษะเล็กน้อย) ใช้เชือก (rope attachment)</li>
+                <li>ยืนตรง เท้ากว้างเท่าไหล่ ถอยหลังเล็กน้อยให้สายตึง</li>
+                <li>ดึงเชือกมาที่ระดับหน้าผาก–จมูก แยกมือออกจากกัน</li>
+                <li>หมุนมือออกด้านข้างที่จุดสุด ท่อนแขนบนตั้งฉากกับลำตัว</li>
+                <li>บีบสะบักเข้าหากัน ค้าง 1–2 วินาที ค่อยๆ ปล่อยกลับ</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: อย่าใช้น้ำหนักหนักเกิน เน้นรู้สึกกล้ามเนื้อทำงาน อย่ายกไหล่ขึ้น</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardio-card">
+          <span class="cardio-icon">&#128293;</span>
+          <strong>คาร์ดิโอ:</strong> 15–20 นาที Elliptical/ลู่วิ่ง Zone 2 &middot; 115–134 bpm
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🧘 ยืดเหยียด <span class="duration-chip">5–7 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>ยืดอก (Chest Doorway Stretch)</strong> — ยืนข้างกรอบประตู แขนเท้ากรอบ ศอกระดับไหล่ เอนตัวไปข้างหน้า → ยืดกล้ามเนื้ออกและไหล่ด้านหน้า</li>
+              <li><strong>ยืดหลังกว้าง (Lat Stretch)</strong> — จับเสา/กรอบประตูข้างเดียว เอนลำตัวออก → ยืดกล้ามเนื้อหลังกว้าง</li>
+              <li><strong>ยืดต้นแขนหลัง (Tricep Stretch)</strong> — ยกแขนขึ้น งอศอก มือแตะหลัง มืออีกข้างกดศอกเบาๆ (⚠️ ข้อศอกซ้าย: ทำเบาๆ ถ้าเจ็บให้ข้าม)</li>
+              <li><strong>ยืดคอด้านข้าง (Neck Side Stretch)</strong> — เอียงหัวไปด้านข้าง มือกดเบาๆ ค้าง → ยืดกล้ามเนื้อบ่า</li>
+              <li><strong>ยืดไหล่หลัง (Cross-body Shoulder Stretch)</strong> — แขนข้ามหน้าอก มืออีกข้างดึงเข้า → ยืดไหล่ด้านหลัง</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           GYM · FRIDAY  (ศุกร์ — Lower B เน้นต้นขาหลัง+ก้น)
+      ══════════════════════════════════════════════ -->
+      <div id="panel-gym-friday" class="day-panel">
+        <div class="day-panel-header">
+          <h3>&#127947; ศุกร์ &mdash; Lower B</h3>
+          <span class="badge-lower-hip">เน้นต้นขาหลัง+ก้น</span>
+          &nbsp;
+          <span class="duration-chip">&#9200; 75–90 นาที</span>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🔥 วอร์มอัพ <span class="duration-chip">8–10 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>Bodyweight Squat ใช้แผ่นรองส้นเท้า</strong> — 10 ครั้ง วางแผ่นรอง/wedge ใต้ส้นเท้า ย่อลงช้าๆ</li>
+              <li><strong>แกว่งขาหน้า-หลัง (Leg Swing Front-Back)</strong> — 10 ครั้ง/ข้าง จับราวจับทรงตัว แกว่งขาไปหน้า-หลัง</li>
+              <li><strong>แกว่งขาเข้า-ออก (Leg Swing Side-to-Side)</strong> — 10 ครั้ง/ข้าง แกว่งขาเข้า-ออก</li>
+              <li><strong>Glute Bridge (ดันก้นขึ้น)</strong> — 15 ครั้ง นอนหงาย เข่างอ ดันก้นขึ้น บีบก้นค้าง 1 วินาที</li>
+              <li><strong>หมุนข้อเท้า (Ankle Circles)</strong> — 10 รอบ/ข้าง/ทิศทาง (⚠️ ข้อเท้าซ้าย: ทำเบาๆ ในช่วงที่สบาย)</li>
+              <li><strong>Cat-Cow (แอ่น-โก่งหลัง)</strong> — 8 ครั้ง</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered exercise-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>ท่า</th>
+                <th style="width:130px">Sets &times; Reps</th>
+                <th style="width:70px">พัก</th>
+                <th style="width:160px">น้ำหนักเริ่มต้น</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Dumbbell Sumo Squat</td><td>3&times;10-12</td><td>90s</td><td>12 kg</td></tr>
+              <tr><td>2</td><td>Leg Extension</td><td>3&times;12-15</td><td>60s</td><td>15 kg</td></tr>
+              <tr><td>3</td><td>Dumbbell Stiff-Leg Deadlift</td><td>3&times;10-12</td><td>90s</td><td>8 kg/ข้าง</td></tr>
+              <tr><td>4</td><td>Cable Hip Abduction</td><td>3&times;15/ข้าง</td><td>60s</td><td>5 kg</td></tr>
+              <tr><td>5</td><td>Seated Calf Raise (DB บนเข่า)</td><td>3&times;15-20</td><td>60s</td><td>8 kg</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            📋 รายละเอียดแต่ละท่า
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">1</span>
+                <span class="ex-name">Dumbbell Sumo Squat (สควอทขากว้าง)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหน้า, ต้นขาด้านใน, ก้น</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนเท้ากว้างมาก (กว้างกว่าไหล่ 1.5–2 เท่า) ปลายเท้าหันออก ~45°</li>
+                <li>จับ dumbbell ด้านบนแนวตั้ง ทั้งสองมือห้อยลงตรงกลาง</li>
+                <li>อกยืด เกร็งท้อง ย่อลงโดยดันเข่าออกตามแนวปลายเท้า สะโพกลง</li>
+                <li>ลงจนต้นขาขนานพื้นหรือลึกเท่าที่สบาย</li>
+                <li>ดันขึ้นผ่านส้นเท้า บีบก้น + ต้นขาด้านในที่ด้านบน</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อเท้าซ้าย: Sumo stance ต้องกระดกข้อเท้าน้อยกว่า squat ปกติ — เหมาะกว่า แต่ถ้ารู้สึกไม่สบายให้ใช้แผ่นรองส้นเท้าเพิ่ม อย่าให้เข่าหุบเข้าใน</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">2</span>
+                <span class="ex-name">Leg Extension (เครื่องเหยียดขา)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหน้า (Quadriceps)</span>
+              </div>
+              <ol class="detail-list">
+                <li>นั่งบนเครื่อง ปรับหลังพิงตรง สะโพกชิดพนักพิง</li>
+                <li>ปรับแผ่นกดให้อยู่ด้านหน้าข้อเท้า (เหนือเท้า)</li>
+                <li>เหยียดเข่าขึ้นจนขาตรง บีบต้นขาหน้าที่จุดบนสุด 1–2 วินาที</li>
+                <li>ค่อยๆ ลดลงมาช้าๆ (2–3 วินาที) จนเข่างอ ~90°</li>
+                <li>ทำซ้ำ ไม่ใช้แรงเหวี่ยง</li>
+              </ol>
+              <div class="tip-box">💡 จุดสำคัญ: ข้อเท้าซ้ายไม่ได้รับภาระโดยตรงในท่านี้ → ปลอดภัย เน้นควบคุมช่วงปล่อยน้ำหนักลง</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">3</span>
+                <span class="ex-name">Dumbbell Stiff-Leg Deadlift (ยกดัมเบลขาเกือบตรง)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ต้นขาหลัง (เน้นยืด), ก้น, หลังล่าง</span>
+              </div>
+              <ol class="detail-list">
+                <li>ยืนตรง เท้ากว้างเท่าสะโพก จับ dumbbell หน้าต้นขา</li>
+                <li>เข่าเกือบตรง (ไม่ล็อกเข่า แต่งอน้อยกว่า RDL)</li>
+                <li>พับตัวที่สะโพก: ดันสะโพกถอยหลัง ลำตัวเอนไปข้างหน้า</li>
+                <li>ลดลงช้าๆ จนรู้สึกยืดที่ต้นขาหลังอย่างชัดเจน หลังตรงตลอด</li>
+                <li>บีบก้น + ต้นขาหลัง ดันกลับขึ้นมา</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อเท้าซ้าย: สองขา กระจายน้ำหนักเท่ากัน อย่าฝืนลงลึกถ้าต้นขาหลังยังไม่ยืดหยุ่นพอ ถ้ารู้สึกที่หลังล่างมากกว่าต้นขาหลัง → เช็ค form</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">4</span>
+                <span class="ex-name">Cable Hip Abduction (กางขาด้วยสายเคเบิล)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: ก้นด้านข้าง (Gluteus Medius)</span>
+              </div>
+              <ol class="detail-list">
+                <li>ปรับรอก Cable ต่ำสุด ใส่สายรัดข้อเท้า (ankle strap) คล้องที่ข้อเท้า</li>
+                <li>ยืนด้านข้างของ Cable จับราวจับเพื่อทรงตัว</li>
+                <li>ยืนตรง ขาที่คล้องสายอยู่ด้านไกลจาก Cable</li>
+                <li>กางขาออกด้านข้างช้าๆ จนรู้สึกก้นด้านข้างทำงาน (~30–45°) ค้าง 1 วินาที</li>
+                <li>ค่อยๆ ลดลงมาช้าๆ ไม่ให้ขาแกว่ง ทำครบแล้วสลับข้าง</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อเท้าซ้าย: เมื่อทำขาซ้าย ระวังไม่ให้ข้อเท้าอยู่ในท่าที่ไม่สบาย ถ้าเจ็บให้ข้ามท่านี้ เมื่อขาซ้ายเป็นขายืน ให้จับราวจับแน่น อย่าเอนลำตัวไปด้านข้าง</div>
+            </div>
+            <div class="ex-detail-card">
+              <div class="ex-detail-header">
+                <span class="ex-num">5</span>
+                <span class="ex-name">Seated Calf Raise วาง Dumbbell บนเข่า (เขย่งน่องนั่ง)</span>
+                <span class="muscle-tag">กล้ามเนื้อหลัก: น่องมัดลึก (Soleus)</span>
+              </div>
+              <ol class="detail-list">
+                <li>นั่งบนม้านั่ง/เก้าอี้ เข่างอ 90° เท้าราบกับพื้น</li>
+                <li>วาง dumbbell บนเข่าทั้งสอง (หรือข้างละข้างเข่า)</li>
+                <li>ใช้ปลายเท้ากดดันขึ้น เขย่งส้นเท้าขึ้นจากพื้น</li>
+                <li>บีบน่อง 1–2 วินาทีที่จุดบนสุด</li>
+                <li>ค่อยๆ ลดลงมาช้าๆ จนส้นเท้าแตะพื้น ทำช้าๆ ต่อเนื่อง ไม่กระดอน</li>
+              </ol>
+              <div class="tip-box tip-box warn">⚠️ ข้อเท้าซ้าย: ทำสองเท้า ถ้าเจ็บข้อเท้าซ้ายให้ลดช่วงการเคลื่อนไหวหรือน้ำหนัก</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardio-card">
+          <span class="cardio-icon">&#128293;</span>
+          <strong>คาร์ดิโอ:</strong> 15–20 นาที Elliptical/ลู่วิ่ง Zone 2 &middot; 115–134 bpm
+        </div>
+
+        <div class="detail-section">
+          <button class="detail-toggle" onclick="toggleSection(this)">
+            🧘 ยืดเหยียด <span class="duration-chip">5–7 นาที</span>
+            <span class="toggle-arrow">▼</span>
+          </button>
+          <div class="detail-body" style="display:none">
+            <ol class="detail-list">
+              <li><strong>ยืดต้นขาหน้า (Standing Quad Stretch)</strong> — ยืนจับราว ดึงเท้าขึ้นชิดก้น → ยืดกล้ามเนื้อต้นขาหน้า (⚠️ จับราวทรงตัวเสมอ)</li>
+              <li><strong>ยืดต้นขาหลัง (Standing Hamstring Stretch)</strong> — วางส้นเท้าบนขั้นบันไดต่ำ ขาตรง เอนลำตัวไปข้างหน้า → ยืดกล้ามเนื้อต้นขาหลัง</li>
+              <li><strong>ยืดน่อง (Wall Calf Stretch)</strong> — มือเท้ากำแพง ขาหนึ่งถอยหลัง ส้นเท้าราบ → ยืดน่องมัดใหญ่ (⚠️ ข้อเท้าซ้าย: ทำเบาๆ)</li>
+              <li><strong>ยืดสะโพกหน้า (Kneeling Hip Flexor Stretch)</strong> — คุกเข่าข้างหนึ่ง ดันสะโพกไปข้างหน้า → ยืดกล้ามเนื้อสะโพกหน้า</li>
+              <li><strong>ยืดก้น (Seated Glute Stretch — Figure-4)</strong> — นั่ง ไขว้ข้อเท้าบนเข่าอีกข้าง เอนไปข้างหน้า → ยืดกล้ามเนื้อก้น</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /container -->
+  </section>
+
+  <!-- Rest Timer Widget -->
+  <div class="rest-timer" id="restTimer">
+    <div class="timer-card" id="timerCard">
+      <h6>พักระหว่างเซ็ต</h6>
+      <div class="timer-display" id="timerDisplay">01:30</div>
+      <div class="timer-presets">
+        <button onclick="resetTimer(60)" id="preset60">60s</button>
+        <button onclick="resetTimer(90)" id="preset90" class="active-preset">90s</button>
+      </div>
+      <div class="timer-controls">
+        <button class="btn-start" onclick="startTimer()">&#9654; เริ่ม</button>
+        <button class="btn-pause" onclick="pauseTimer()">&#9646;&#9646; หยุด</button>
+        <button class="btn-reset" onclick="resetTimer(timerSeconds || 90)">&#8635; รีเซ็ต</button>
+      </div>
+    </div>
+    <div class="timer-bubble" onclick="toggleTimer()" title="พักระหว่างเซ็ต">&#9202;</div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/animation.js"></script>
+  <script src="assets/js/custom.js"></script>
+
+  <script>
+    // ── Collapsible sections ─────────────────────────────
+    function toggleSection(btn) {
+      btn.classList.toggle('open');
+      var body = btn.nextElementSibling;
+      body.style.display = body.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // ── Timer State ──────────────────────────────────────
+    var timerInterval = null;
+    var timerSeconds  = 90;
+    var timerRunning  = false;
+    var currentPreset = 90;
+
+    function toggleTimer() {
+      var card = document.getElementById('timerCard');
+      card.style.display = (card.style.display === 'none' || card.style.display === '') ? 'block' : 'none';
+    }
+
+    function updateTimerDisplay() {
+      var m = Math.floor(timerSeconds / 60);
+      var s = timerSeconds % 60;
+      var display = document.getElementById('timerDisplay');
+      display.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+      if (timerSeconds === 0) {
+        display.classList.add('timer-done');
+      } else {
+        display.classList.remove('timer-done');
+      }
+    }
+
+    function startTimer() {
+      if (timerRunning) return;
+      timerRunning = true;
+      timerInterval = setInterval(function() {
+        if (timerSeconds > 0) {
+          timerSeconds--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerRunning = false;
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+    }
+
+    function resetTimer(seconds) {
+      clearInterval(timerInterval);
+      timerRunning  = false;
+      timerSeconds  = seconds;
+      currentPreset = seconds;
+      updateTimerDisplay();
+      // update active preset button highlight
+      document.getElementById('preset60').classList.toggle('active-preset', seconds === 60);
+      document.getElementById('preset90').classList.toggle('active-preset', seconds === 90);
+    }
+
+    // ── Panel Show/Hide ───────────────────────────────────
+    function showDay(program, day) {
+      // Hide all panels
+      document.querySelectorAll('.day-panel').forEach(function(p) {
+        p.style.display = 'none';
+        p.classList.remove('active');
+      });
+      // Show selected panel
+      var target = document.getElementById('panel-' + program + '-' + day);
+      if (target) {
+        target.style.display = 'block';
+        target.classList.add('active');
+      }
+      // Scroll to workout section smoothly
+      var section = document.getElementById('workout-section');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      // (no hamburger on mobile — nav is always visible)
+    }
+
+    // ── Mobile submenu toggle ─────────────────────────────
+    $(document).on('click', '.submenu > a', function(e) {
+      if ($(window).width() < 767) {
+        e.preventDefault();
+        var $ul = $(this).siblings('ul');
+        $('.submenu ul').not($ul).removeClass('active');
+        $ul.toggleClass('active');
+      }
+    });
+
+    // ── Init ─────────────────────────────────────────────
+    showDay('home', 'monday');
+    updateTimerDisplay();
+
+    // Hide preloader (custom.js crashes before registering its own load handler
+    // because owlCarousel / leanModal plugins are not loaded in this page)
+    $(window).on('load', function() {
+      $('#js-preloader').addClass('loaded');
+    });
+</script>
+</body>
+</html>

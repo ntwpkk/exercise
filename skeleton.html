@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workout — Skeleton</title>
+  <style>
+    @font-face {
+      font-family: 'kurious_looped';
+      src: url('fonts/kurious_looped-medium.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'kurious_looped';
+      src: url('fonts/kurious_looped-semibold.woff') format('woff');
+      font-weight: 600;
+      font-style: normal;
+    }
+  </style>
+  <style>
+    /* ── Design tokens (from theme.css) ─────────────────────── */
+    :root {
+      --color-bg:               #B8EDF5;
+      --color-surface:          #FFFFFF;
+      --color-primary:          #4C96D3;
+      --color-primary-dark:     #3A7DBF;
+      --color-secondary:        #87CEEB;
+      --color-accent-cyan:      #4CBFED;
+      --color-accent-red:       #E85555;
+      --color-text-primary:     #1A1A2E;
+      --color-text-secondary:   #888888;
+      --color-text-muted:       #BDBDBD;
+      --color-input-bg:         #F0F0F0;
+      --color-border:           #E8E8E8;
+      --font-family:            'kurious_looped', sans-serif;
+      --font-size-xs:           11px;
+      --font-size-sm:           12px;
+      --font-size-base:         14px;
+      --font-size-md:           16px;
+      --font-size-lg:           20px;
+      --font-size-xl:           24px;
+      --space-1:                4px;
+      --space-2:                8px;
+      --space-3:                12px;
+      --space-4:                16px;
+      --space-5:                20px;
+      --space-6:                24px;
+      --radius-sm:              8px;
+      --radius-md:              12px;
+      --radius-lg:              16px;
+      --radius-xl:              20px;
+      --radius-full:            9999px;
+      --shadow-sm:              0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md:              0 4px 16px rgba(0,0,0,0.10);
+      --header-height:          56px;
+      /* fitness-specific */
+      --color-warn:             #E85555;
+      --color-success:          #4CBFED;
+    }
+
+    /* ── Reset ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font-family);
+      font-size: var(--font-size-base);
+      color: var(--color-text-primary);
+      background: #FFFFFF;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── App shell (max 430 px) ──────────────────────────────── */
+    .app-shell {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #FFFFFF 0%, #C3CFD8 100%);
+      position: relative;
+    }
+
+    /* ── Header ──────────────────────────────────────────────── */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--header-height);
+      background: linear-gradient(90deg, #5E97F6, #A44EE8, #27CBE8, #5E97F6);
+      background-size: 300% 100%;
+      animation: googleAIFlow 4s ease infinite, headerGlow 3s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--space-5);
+      box-shadow: 0 4px 16px rgba(76,150,211,0.4);
+    }
+    .app-header h1 {
+      color: #fff;
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-icon {
+      font-size: 22px;
+      display: inline-block;
+      animation: headerIconBounce 1.5s ease infinite;
+    }
+
+    /* ── Tab bar ─────────────────────────────────────────────── */
+    .tab-bar {
+      padding: var(--space-3) var(--space-5);
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .tab-pill-wrap {
+      display: flex;
+      background: var(--color-border);
+      border-radius: var(--radius-full);
+      padding: 3px;
+      gap: 2px;
+    }
+    .tab-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-full);
+      padding: var(--space-2) var(--space-3);
+      font-family: var(--font-family);
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s, transform 0.1s, box-shadow 0.25s;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #4C96D3, #5BBFED);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(76,150,211,0.45);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+      overflow: hidden;
+      position: relative;
+    }
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 150%;
+      width: 55%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      animation: tabShimmer 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .tab-btn:active { transform: scale(0.95); }
+
+    /* ── Day nav ─────────────────────────────────────────────── */
+    .day-nav {
+      display: flex;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      overflow-x: auto;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      scrollbar-width: none;
+    }
+    .day-nav::-webkit-scrollbar { display: none; }
+    .day-btn {
+      flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(76,150,211,0.10), rgba(75,191,237,0.18));
+      border: 1.5px solid rgba(76,150,211,0.5);
+      backdrop-filter: blur(4px);
+      border-radius: var(--radius-full);
+      padding: var(--space-1) var(--space-4);
+      font-family: var(--font-family);
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      color: var(--color-primary);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+      white-space: nowrap;
+    }
+    .day-btn:hover {
+      background: linear-gradient(135deg, rgba(76,150,211,0.22), rgba(75,191,237,0.32));
+      box-shadow: 0 0 0 3px rgba(76,150,211,0.2), 0 2px 8px rgba(75,191,237,0.25);
+    }
+    .day-btn:active { transform: scale(0.93); }
+    .day-btn.active {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent-cyan));
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(75,191,237,0.45);
+      position: relative;
+    }
+    .day-btn.active::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 100%; height: 100%;
+      border-radius: var(--radius-full);
+      border: 1.5px solid rgba(75,191,237,0.65);
+      animation: ringExpand 1.8s ease-out infinite;
+      pointer-events: none;
+    }
+
+    /* ── Content scroll area ────────────────────────────────── */
+    .content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-4) var(--space-4) var(--space-6);
+      background: transparent;
+    }
+
+    /* hide/show panels */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+    .day-panel { display: none; }
+    .day-panel.active { display: block; }
+
+    /* ── Empty panel ─────────────────────────────────────────── */
+    .empty-panel {
+      margin-top: 60px;
+      text-align: center;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-md);
+    }
+    .empty-panel .emoji { font-size: 40px; display: block; margin-bottom: var(--space-3); }
+
+    /* ── Section card ────────────────────────────────────────── */
+    .section-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-4);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .section-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .section-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 45%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+      transform: translateX(-150%) skewX(-15deg);
+      pointer-events: none;
+    }
+    .section-card:hover::after {
+      animation: shimmerSweep 0.65s ease forwards;
+    }
+
+    /* ── Exercise card (collapsible) ─────────────────────────── */
+    .exercise-header {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      text-align: left;
+      font-family: var(--font-family);
+    }
+    .exercise-header:hover { background: rgba(76,150,211,0.09); }
+    .exercise-header:active { transform: scale(0.99); }
+    .exercise-header:hover .exercise-number { transform: scale(1.1); }
+    .exercise-number {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary);
+      color: #fff;
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+    .exercise-number.warmup-num {
+      background: var(--color-secondary);
+      color: var(--color-text-primary);
+    }
+    .exercise-title-wrap { flex: 1; min-width: 0; }
+    .exercise-name {
+      font-size: var(--font-size-base);
+      font-weight: 700;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .exercise-meta {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-top: 2px;
+    }
+    .chevron {
+      flex-shrink: 0;
+      font-size: 18px;
+      color: var(--color-text-muted);
+      transition: transform 0.25s;
+      display: inline-block;
+    }
+    .exercise-header[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+
+    /* highlight when open */
+    .exercise-header[aria-expanded="true"] {
+      background: linear-gradient(135deg, rgba(76,150,211,0.12), rgba(91,191,237,0.08));
+      border-left: 3px solid var(--color-primary);
+    }
+    .exercise-header[aria-expanded="true"] .exercise-number {
+      background: linear-gradient(135deg, #4C96D3, #5BBFED);
+      box-shadow: 0 0 0 4px rgba(76,150,211,0.25);
+      animation: numberPulse 1.5s ease infinite;
+    }
+    .exercise-header[aria-expanded="true"] .exercise-name {
+      color: var(--color-primary);
+    }
+    .exercise-header[aria-expanded="true"] .chevron {
+      color: var(--color-primary);
+    }
+
+    /* body (collapsible content) */
+    .exercise-body {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: var(--space-4);
+      padding-right: var(--space-4);
+      border-top: 1px solid transparent;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1),
+                  opacity 0.25s ease,
+                  padding 0.25s ease,
+                  border-color 0.25s ease;
+    }
+    .exercise-body.open {
+      max-height: 1200px;
+      opacity: 1;
+      padding-bottom: var(--space-4);
+      border-top-color: var(--color-border);
+    }
+
+    /* table inside exercise body */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--font-size-sm);
+      margin-bottom: var(--space-4);
+      margin-top: var(--space-3);
+    }
+    .info-table td {
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+      vertical-align: top;
+    }
+    .info-table td:first-child {
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+      width: 40%;
+    }
+    .info-table tr:last-child td { border-bottom: none; }
+
+    /* section labels inside body */
+    .section-label {
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin: var(--space-4) 0 var(--space-2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* steps list */
+    .steps-list {
+      padding-left: var(--space-5);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-primary);
+    }
+    .steps-list li { margin-bottom: var(--space-2); line-height: 1.6; }
+
+    /* cautions list */
+    .warn-list {
+      list-style: none;
+      padding-left: 0;
+      font-size: var(--font-size-sm);
+    }
+    .warn-list li {
+      padding: var(--space-2) var(--space-3);
+      background: rgba(232,85,85,0.07);
+      border-left: 3px solid var(--color-warn);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: var(--space-2);
+      line-height: 1.6;
+      color: var(--color-text-primary);
+    }
+
+    /* ── Cardio / Stretching block ───────────────────────────── */
+    .info-block {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-4);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .info-block:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .info-block::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 45%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+      transform: translateX(-150%) skewX(-15deg);
+      pointer-events: none;
+    }
+    .info-block:hover::after {
+      animation: shimmerSweep 0.65s ease forwards;
+    }
+    .info-block-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: linear-gradient(135deg, #5CC8C8, #4C96D3);
+    }
+    .info-block-header.stretch-header {
+      background: linear-gradient(135deg, #87CEEB, #4CBFED);
+    }
+    .info-block-icon { font-size: 24px; }
+    .info-block-title {
+      font-size: var(--font-size-md);
+      font-weight: 700;
+      color: #fff;
+    }
+    .info-block-subtitle {
+      font-size: var(--font-size-sm);
+      color: rgba(255,255,255,0.85);
+      margin-top: 1px;
+    }
+    .info-block-body { padding: var(--space-4); }
+    .info-block-body .info-table { margin-top: 0; }
+
+    /* ── Warmup section ──────────────────────────────────────── */
+    .warmup-header-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: linear-gradient(135deg, #FF7F50, #FFB347, #FFD480);
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    }
+    .warmup-header-row .info-block-icon { font-size: 24px; }
+    .warmup-header-row .info-block-title { color: #fff; font-size: var(--font-size-md); font-weight: 700; }
+    .warmup-header-row .info-block-subtitle { color: rgba(255,255,255,0.85); font-size: var(--font-size-sm); }
+    .warmup-list {
+      list-style: none;
+      padding: var(--space-3) var(--space-4) var(--space-4);
+    }
+    .warmup-list li {
+      display: flex;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: var(--font-size-sm);
+      line-height: 1.6;
+    }
+    .warmup-list li:last-child { border-bottom: none; }
+    .warmup-idx {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-full);
+      background: var(--color-secondary);
+      color: var(--color-text-primary);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    /* ── Day title badge ─────────────────────────────────────── */
+    .day-title-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      animation: gentleFloat 3.5s ease-in-out infinite;
+    }
+    .day-title-badge .badge-icon { font-size: 28px; }
+    .day-title-badge .badge-text { font-size: var(--font-size-md); font-weight: 700; }
+    .day-title-badge .badge-sub { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+
+    /* ── Animations ──────────────────────────────────────────── */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(20px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
+    }
+    .day-panel.active .section-card,
+    .day-panel.active .info-block,
+    .day-panel.active .day-title-badge {
+      animation: cardEnter 0.35s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .day-panel.active > *:nth-child(1)  { animation-delay: 0.00s; }
+    .day-panel.active > *:nth-child(2)  { animation-delay: 0.05s; }
+    .day-panel.active > *:nth-child(3)  { animation-delay: 0.10s; }
+    .day-panel.active > *:nth-child(4)  { animation-delay: 0.15s; }
+    .day-panel.active > *:nth-child(5)  { animation-delay: 0.20s; }
+    .day-panel.active > *:nth-child(6)  { animation-delay: 0.25s; }
+    .day-panel.active > *:nth-child(7)  { animation-delay: 0.30s; }
+    .day-panel.active > *:nth-child(8)  { animation-delay: 0.35s; }
+    .day-panel.active > *:nth-child(9)  { animation-delay: 0.40s; }
+
+    @keyframes googleAIFlow {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes fireFlicker {
+      0%   { background-position: 0% 50%; }
+      33%  { background-position: 60% 20%; }
+      66%  { background-position: 100% 80%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes headerShimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes headerGlow {
+      0%, 100% { box-shadow: 0 4px 16px rgba(76,150,211,0.4); }
+      50%       { box-shadow: 0 4px 24px rgba(76,150,211,0.7); }
+    }
+    @keyframes headerIconBounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-4px); }
+    }
+    @keyframes numberPulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(76,150,211,0.25); }
+      50%       { box-shadow: 0 0 0 8px rgba(76,150,211,0.10); }
+    }
+    @keyframes shimmerSweep {
+      0%   { transform: translateX(-150%) skewX(-15deg); }
+      100% { transform: translateX(300%)  skewX(-15deg); }
+    }
+    @keyframes ringExpand {
+      0%   { transform: translate(-50%, -50%) scale(1);   opacity: 0.55; }
+      100% { transform: translate(-50%, -50%) scale(2.4); opacity: 0; }
+    }
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-5px); }
+    }
+    @keyframes tabShimmer {
+      0%, 60%, 100% { left: 150%; }
+      30%            { left: -80%; }
+    }
+
+    /* ── media query ─────────────────────────────────────────── */
+    @media (min-width: 480px) {
+      .content-area { padding: var(--space-5) var(--space-5) var(--space-8); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- ── Header ──────────────────────────────────────────── -->
+    <header class="app-header">
+      <h1>Tae Workout</h1>
+    </header>
+
+    <!-- ── Tab bar: 2 pills (Gym / Home) ───────────────────── -->
+    <nav class="tab-bar" aria-label="Workout location">
+      <div class="tab-pill-wrap">
+        <button class="tab-btn active" data-tab="gym"><img src="images/gym.png" style="height:30px;vertical-align:middle;margin-right:4px;"> Gym</button>
+        <button class="tab-btn" data-tab="home"><img src="images/home.png" style="height:30px;vertical-align:middle;margin-right:4px;"> Home</button>
+      </div>
+    </nav>
+
+    <!-- ── Content area ────────────────────────────────────── -->
+    <main class="content-area">
+
+      <!-- ════════════════════════════════════════════════════
+           TAB: GYM
+      ════════════════════════════════════════════════════════ -->
+      <div id="tab-gym" class="tab-content active">
+
+        <!-- Day nav: 4 pill buttons per tab -->
+        <nav class="day-nav" aria-label="Gym days">
+          <button class="day-btn active" data-day="gym-monday">[วัน A]</button>
+          <button class="day-btn" data-day="gym-tuesday">[วัน B]</button>
+          <button class="day-btn" data-day="gym-thursday">[วัน C]</button>
+          <button class="day-btn" data-day="gym-friday">[วัน D]</button>
+        </nav>
+
+        <!-- ── Day panel (active example) ────────────────── -->
+        <div id="gym-monday" class="day-panel active">
+
+          <!-- day-title-badge: icon + title + subtitle -->
+          <div class="day-title-badge" style="margin-top: var(--space-4);">
+            <span class="badge-icon"><img src="images/arm.gif" style="height:40px;vertical-align:middle;"></span>
+            <div>
+              <div class="badge-text">[ชื่อวัน — โฟกัส]</div>
+              <div class="badge-sub">[วันในสัปดาห์ · X ท่า + คาร์ดิโอ + ยืดเหยียด]</div>
+            </div>
+          </div>
+
+          <!-- section-card: Warmup block -->
+          <div class="section-card">
+            <div class="warmup-header-row">
+              <span class="info-block-icon">🔥</span>
+              <div>
+                <div class="info-block-title">วอร์มอัพ</div>
+                <div class="info-block-subtitle">[X–Y นาที]</div>
+              </div>
+            </div>
+            <!-- warmup-list: 1 item shown; repeat li for each warmup step -->
+            <ul class="warmup-list">
+              <li>
+                <span class="warmup-idx">1</span>
+                <span><strong>[ชื่อท่าวอร์มอัพ]</strong> — [คำอธิบาย sets/reps…]</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- section-card: Exercise (collapsed) -->
+          <div class="section-card">
+            <button class="exercise-header" aria-expanded="false">
+              <span class="exercise-number">01</span>
+              <div class="exercise-title-wrap">
+                <p class="exercise-name">[ชื่อท่า]</p>
+                <p class="exercise-meta">[sets × reps] · พัก [X] วิ · [น้ำหนัก]</p>
+              </div>
+              <span class="chevron">▾</span>
+            </button>
+            <!-- exercise-body hidden by default (no .open) -->
+            <div class="exercise-body">
+              <!-- info-table: 1 row shown; repeat tr for each attribute -->
+              <table class="info-table">
+                <tr><td>[label]</td><td>[value]</td></tr>
+              </table>
+              <p class="section-label">วิธีทำ</p>
+              <!-- steps-list: 1 item shown; repeat li for each step -->
+              <ol class="steps-list">
+                <li>[ขั้นตอนที่ 1…]</li>
+              </ol>
+              <p class="section-label">⚠️ ข้อควรระวัง</p>
+              <!-- warn-list: 1 item shown; repeat li for each caution -->
+              <ul class="warn-list">
+                <li>[คำเตือน…]</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- section-card: Exercise (expanded / .open example) -->
+          <div class="section-card">
+            <button class="exercise-header" aria-expanded="true">
+              <span class="exercise-number">02</span>
+              <div class="exercise-title-wrap">
+                <p class="exercise-name">[ชื่อท่า — expanded]</p>
+                <p class="exercise-meta">[sets × reps] · พัก [X] วิ · [น้ำหนัก]</p>
+              </div>
+              <span class="chevron">▾</span>
+            </button>
+            <!-- exercise-body open (add .open to show content) -->
+            <div class="exercise-body open">
+              <table class="info-table">
+                <tr><td>[label]</td><td>[value]</td></tr>
+              </table>
+              <p class="section-label">วิธีทำ</p>
+              <ol class="steps-list">
+                <li>[ขั้นตอนที่ 1…]</li>
+              </ol>
+              <p class="section-label">⚠️ ข้อควรระวัง</p>
+              <ul class="warn-list">
+                <li>[คำเตือน…]</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- info-block: Cardio block (teal gradient header) -->
+          <div class="info-block">
+            <div class="info-block-header">
+              <span class="info-block-icon">🏃</span>
+              <div>
+                <div class="info-block-title">[ชื่อบล็อกคาร์ดิโอ]</div>
+                <div class="info-block-subtitle">[อุปกรณ์ · X–Y นาที]</div>
+              </div>
+            </div>
+            <div class="info-block-body">
+              <table class="info-table">
+                <tr><td>[label]</td><td>[value]</td></tr>
+              </table>
+              <p class="section-label">วิธีทำ</p>
+              <ol class="steps-list">
+                <li>[ขั้นตอนที่ 1…]</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- info-block: Stretch block (cyan gradient via .stretch-header) -->
+          <div class="info-block">
+            <div class="info-block-header stretch-header">
+              <span class="info-block-icon">🧘</span>
+              <div>
+                <div class="info-block-title">[ชื่อบล็อกยืดเหยียด]</div>
+                <div class="info-block-subtitle">[X–Y นาที · ค้าง X–Y วิ/ท่า]</div>
+              </div>
+            </div>
+            <div class="info-block-body">
+              <ol class="steps-list">
+                <li>[ท่ายืดเหยียดที่ 1…]</li>
+              </ol>
+            </div>
+          </div>
+
+        </div><!-- end #gym-monday -->
+
+        <!-- #gym-tuesday, #gym-thursday, #gym-friday: same structure as #gym-monday, omitted -->
+        <div id="gym-tuesday" class="day-panel"></div>
+        <div id="gym-thursday" class="day-panel"></div>
+        <div id="gym-friday" class="day-panel"></div>
+
+      </div><!-- end #tab-gym -->
+
+
+      <!-- ════════════════════════════════════════════════════
+           TAB: HOME — same structure as #tab-gym, omitted
+      ════════════════════════════════════════════════════════ -->
+      <div id="tab-home" class="tab-content">
+
+        <nav class="day-nav" aria-label="Home days">
+          <button class="day-btn active" data-day="home-monday">[วัน A]</button>
+          <button class="day-btn" data-day="home-tuesday">[วัน B]</button>
+          <button class="day-btn" data-day="home-thursday">[วัน C]</button>
+          <button class="day-btn" data-day="home-friday">[วัน D]</button>
+        </nav>
+
+        <!-- home panels: same structure as gym panels, omitted -->
+        <div id="home-monday" class="day-panel active"></div>
+        <div id="home-tuesday" class="day-panel"></div>
+        <div id="home-thursday" class="day-panel"></div>
+        <div id="home-friday" class="day-panel"></div>
+
+      </div><!-- end #tab-home -->
+
+    </main><!-- end .content-area -->
+  </div><!-- end .app-shell -->
+
+  <script>
+    // ── Tab switching ────────────────────────────────────────
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + target).classList.add('active');
+        // persist
+        localStorage.setItem('activeTab', target);
+      });
+    });
+
+    // ── Day switching ────────────────────────────────────────
+    document.querySelectorAll('.day-nav').forEach(nav => {
+      const dayBtns = nav.querySelectorAll('.day-btn');
+      dayBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // find sibling day panels in parent tab-content
+          const tabContent = nav.closest('.tab-content');
+          tabContent.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+          dayBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById(btn.dataset.day).classList.add('active');
+          // persist
+          const tabId = tabContent.id.replace('tab-', '');
+          localStorage.setItem('activeDay-' + tabId, btn.dataset.day);
+        });
+      });
+    });
+
+    // ── Accordion ────────────────────────────────────────────
+    document.querySelectorAll('.exercise-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const body = header.nextElementSibling;
+        const expanded = header.getAttribute('aria-expanded') === 'true';
+        header.setAttribute('aria-expanded', String(!expanded));
+        body.classList.toggle('open', !expanded);
+      });
+    });
+
+    // ── Restore persisted state ──────────────────────────────
+    (function restoreState() {
+      const savedTab = localStorage.getItem('activeTab');
+      if (savedTab) {
+        const btn = document.querySelector('.tab-btn[data-tab="' + savedTab + '"]');
+        if (btn) btn.click();
+      }
+      ['gym', 'home'].forEach(tab => {
+        const savedDay = localStorage.getItem('activeDay-' + tab);
+        if (savedDay) {
+          const btn = document.querySelector('.day-btn[data-day="' + savedDay + '"]');
+          if (btn) btn.click();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
